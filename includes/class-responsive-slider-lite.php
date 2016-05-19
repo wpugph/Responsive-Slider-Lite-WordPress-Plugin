@@ -218,39 +218,39 @@ class Responsive_Slider_Lite {
 				// Register Slider CPT
 				function homeslider_post_type() {
 					$labels = array(
-						'name'                  => _x( 'Home Sliders', 'Post Type General Name', 'businessportfolio' ),
-						'singular_name'         => _x( 'Home Slider', 'Post Type Singular Name', 'businessportfolio' ),
-						'menu_name'             => __( 'Home Slider', 'businessportfolio' ),
-						'name_admin_bar'        => __( 'Home Slider', 'businessportfolio' ),
-						'archives'              => __( 'Home Slider Archives', 'businessportfolio' ),
-						'parent_item_colon'     => __( 'Parent Item:', 'businessportfolio' ),
-						'all_items'             => __( 'All Sliders', 'businessportfolio' ),
-						'add_new_item'          => __( 'Add New Slider', 'businessportfolio' ),
-						'add_new'               => __( 'Add New Slider', 'businessportfolio' ),
-						'new_item'              => __( 'New Slider', 'businessportfolio' ),
-						'edit_item'             => __( 'Edit Slider', 'businessportfolio' ),
-						'update_item'           => __( 'Update Slider', 'businessportfolio' ),
-						'view_item'             => __( 'View Slider', 'businessportfolio' ),
-						'search_items'          => __( 'Search Slider', 'businessportfolio' ),
-						'not_found'             => __( 'Not found', 'businessportfolio' ),
-						'not_found_in_trash'    => __( 'Not found in Trash', 'businessportfolio' ),
-						'featured_image'        => __( 'Featured Image', 'businessportfolio' ),
+						'name'                  => _x( 'Slider', 'Post Type General Name', 'responsive_slider_lite' ),
+						'singular_name'         => _x( 'Slider', 'Post Type Singular Name', 'responsive_slider_lite' ),
+						'menu_name'             => __( 'Slider', 'responsive_slider_lite' ),
+						'name_admin_bar'        => __( 'Slider', 'responsive_slider_lite' ),
+						'archives'              => __( 'Slider Archives', 'responsive_slider_lite' ),
+						'parent_item_colon'     => __( 'Parent Item:', 'responsive_slider_lite' ),
+						'all_items'             => __( 'All Sliders', 'responsive_slider_lite' ),
+						'add_new_item'          => __( 'Add New Slider', 'responsive_slider_lite' ),
+						'add_new'               => __( 'Add New Slider', 'responsive_slider_lite' ),
+						'new_item'              => __( 'New Slider', 'responsive_slider_lite' ),
+						'edit_item'             => __( 'Edit Slider', 'responsive_slider_lite' ),
+						'update_item'           => __( 'Update Slider', 'responsive_slider_lite' ),
+						'view_item'             => __( 'View Slider', 'responsive_slider_lite' ),
+						'search_items'          => __( 'Search Slider', 'responsive_slider_lite' ),
+						'not_found'             => __( 'Not found', 'responsive_slider_lite' ),
+						'not_found_in_trash'    => __( 'Not found in Trash', 'responsive_slider_lite' ),
+						'featured_image'        => __( 'Featured Image', 'responsive_slider_lite' ),
 						'set_featured_image'    => __( 'Set featured image', 'businessportfolio' ),
-						'remove_featured_image' => __( 'Remove featured image', 'businessportfolio' ),
-						'use_featured_image'    => __( 'Use as featured image', 'businessportfolio' ),
-						'insert_into_item'      => __( 'Insert into item', 'businessportfolio' ),
-						'uploaded_to_this_item' => __( 'Uploaded to this item', 'businessportfolio' ),
-						'items_list'            => __( 'Items list', 'businessportfolio' ),
-						'items_list_navigation' => __( 'Items list navigation', 'businessportfolio' ),
-						'filter_items_list'     => __( 'Filter items list', 'businessportfolio' ),
+						'remove_featured_image' => __( 'Remove featured image', 'responsive_slider_lite' ),
+						'use_featured_image'    => __( 'Use as featured image', 'responsive_slider_lite' ),
+						'insert_into_item'      => __( 'Insert into item', 'responsive_slider_lite' ),
+						'uploaded_to_this_item' => __( 'Uploaded to this item', 'responsive_slider_lite' ),
+						'items_list'            => __( 'Items list', 'responsive_slider_lite' ),
+						'items_list_navigation' => __( 'Items list navigation', 'responsive_slider_lite' ),
+						'filter_items_list'     => __( 'Filter items list', 'responsive_slider_lite' ),
 					);
 					$args = array(
-						'label'                 => __( 'Home Slider', 'businessportfolio' ),
-						'description'           => __( 'Home Page Slider Images', 'businessportfolio' ),
+						'label'                 => __( 'Slider', 'responsive_slider_lite' ),
+						'description'           => __( 'Slider Images', 'responsive_slider_lite' ),
 						'labels'                => $labels,
-						'supports'              => array( 'editor', 'title',  'thumbnail', ),
-						'taxonomies'            => array( '' ),
-						'hierarchical'          => false,
+						'supports'              => array( 'editor', 'title',  'thumbnail', 'page-attributes' ),
+						'taxonomies'            => array( 'slider_cat' ),
+						'hierarchical'          => true,
 						'public'                => true,
 						'show_ui'               => true,
 						'show_in_menu'          => true,
@@ -264,10 +264,50 @@ class Responsive_Slider_Lite {
 						'publicly_queryable'    => true,
 						'capability_type'       => 'page',
 					);
-					register_post_type( 'homeslider', $args );
+					register_post_type( 'responsive_slider_l', $args );
 				}
 				add_action( 'init', 'homeslider_post_type', 0 );
 			}
+
+			// Register Custom Taxonomy
+			function responsive_slider_l_taxonomy() {
+
+				$labels = array(
+					'name'                       => _x( 'Slider Categories', 'Taxonomy General Name', 'responsive_slider_l' ),
+					'singular_name'              => _x( 'Slider Category', 'Taxonomy Singular Name', 'responsive_slider_l' ),
+					'menu_name'                  => __( 'Slider Category', 'responsive_slider_l' ),
+					'all_items'                  => __( 'All Slider Category', 'responsive_slider_l' ),
+					'parent_item'                => __( 'Parent Slider Category', 'responsive_slider_l' ),
+					'parent_item_colon'          => __( 'Parent Slider Category:', 'responsive_slider_l' ),
+					'new_item_name'              => __( 'New Slider Category', 'responsive_slider_l' ),
+					'add_new_item'               => __( 'Add New Slider Category', 'responsive_slider_l' ),
+					'edit_item'                  => __( 'Edit Slider Category', 'responsive_slider_l' ),
+					'update_item'                => __( 'Update Slider Category', 'responsive_slider_l' ),
+					'view_item'                  => __( 'View Slider Category', 'responsive_slider_l' ),
+					'separate_items_with_commas' => __( 'Separate Slider Category with commas', 'responsive_slider_l' ),
+					'add_or_remove_items'        => __( 'Add or remove Slider Category', 'responsive_slider_l' ),
+					'choose_from_most_used'      => __( 'Choose from the most used', 'responsive_slider_l' ),
+					'popular_items'              => __( 'Popular Slider Category', 'responsive_slider_l' ),
+					'search_items'               => __( 'Search Slider Category', 'responsive_slider_l' ),
+					'not_found'                  => __( 'Not Found', 'responsive_slider_l' ),
+					'no_terms'                   => __( 'No Slider Category', 'responsive_slider_l' ),
+					'items_list'                 => __( 'Items Slider Category', 'responsive_slider_l' ),
+					'items_list_navigation'      => __( 'Items list navigation', 'responsive_slider_l' ),
+				);
+				$args = array(
+					'labels'                     => $labels,
+					'hierarchical'               => false,
+					'public'                     => true,
+					'show_ui'                    => true,
+					'show_admin_column'          => true,
+					'show_in_nav_menus'          => true,
+					'show_tagcloud'              => true,
+				);
+				register_taxonomy( 'responsive_slider_cat', array( 'responsive_slider_l' ), $args );
+
+			}
+			add_action( 'init', 'responsive_slider_l_taxonomy', 0 );
+
 	}
 
 	public function homeslider_style_admin() {
@@ -317,6 +357,69 @@ class Responsive_Slider_Lite {
 		add_filter('manage_posts_columns', 'homeslider_columns_head');
 		add_action('manage_posts_custom_column', 'homeslider_columns_content', 9, 2);
 
+
 	}
+
+	public function activate_slider_responsive_sc() {
+		function responsive_slider_lite_func( $atts ) {
+		    $a = shortcode_atts( array(
+		        'foo' => 'something',
+		        'bar' => 'something else',
+		    ), $atts );
+
+				$test = "fo = {$a['foo']} + 1";
+
+				  $args = array( 'post_type' => 'responsive_slider_l' );
+				  $loop = new WP_Query( $args );
+				  $c = 0;
+				  $class = '';
+				 ?>
+				<div class="container">
+				   <br>
+				   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+				     <div class="carousel-inner" role="listbox">
+				       <?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
+				         <?php
+				           $c++;
+				           if ( $c == 1 ) {
+				             $class = ' active';
+				           } else {
+				             $class = '';
+				           };
+				          ?>
+				         <div class="item<?php echo $class ?>">
+				          <?php
+				            //$feat_image_size = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ));
+				            $feat_image = wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) );
+				            echo '<img src="' . $feat_image . '" alt="" width="" height="">' ;
+				            //echo '<div class="carousel-caption">';
+				            //echo '<h3></h3>';
+				            //echo '<p></p>';
+				            //echo '</div>';
+				          ?>
+				        </div>
+				      <?php endwhile; ?>
+				    </div>
+				    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				      <span class="sr-only">Previous</span>
+				    </a>
+				    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				      <span class="sr-only">Next</span>
+				    </a>
+				  </div>
+				</div>
+
+				<?php
+
+		    return $test;
+		}
+		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
+
+
+	}
+
+
 
 }

@@ -100,4 +100,8 @@ class Responsive_Slider_Lite_Public {
 
 	}
 
+	public function test1() {
+		return 'testst';
+	}
+
 }
