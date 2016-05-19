@@ -68,7 +68,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-responsive-slider-lite.php
  */
 function run_responsive_slider_lite() {
 
+
 	$plugin = new Responsive_Slider_Lite();
+	$plugin->register_homeslider();
 	$plugin->run();
 
 }
