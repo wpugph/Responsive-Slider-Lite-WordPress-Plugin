@@ -56,6 +56,7 @@ register_deactivation_hook( __FILE__, 'deactivate_responsive_slider_lite' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-responsive-slider-lite.php';
+require plugin_dir_path( __FILE__ ) . 'responsive-slider-lite-ordering.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,13 +74,11 @@ function run_responsive_slider_lite() {
 	$plugin->homeslider_style_admin();
 	$plugin->activate_slider_responsive_sc();
 
-	//$plugin2 = new;
-
 	$plugin->run();
 
 //	$plugin_admin = new Responsive_Slider_Lite_Admin();
 //	$plugin_admin->homeslider_style_admin();
-	//Responsive_Slider_Lite_Admin::homeslider_style_admin();
+// Responsive_Slider_Lite_Admin::homeslider_style_admin();
 
 }
 run_responsive_slider_lite();

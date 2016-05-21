@@ -73,8 +73,18 @@ class Responsive_Slider_Lite_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/responsive-slider-lite-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '2', plugin_dir_url( __FILE__ ) . 'css/responsive-slider-lite-public.css', array(), $this->version, 'all' );
 
+		global $wp_styles;
+		if ( $wp_styles instanceof WP_Styles ) {
+			foreach( $wp_styles->queue as $handle ) {
+				$obj = $wp_styles->registered[$handle];
+					if (strpos($obj->src, 'bootstrap') == false) {
+					    		wp_enqueue_style( $this->plugin_name . 'bootstrapcss', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/css/bootstrap.min.css', array(), $this->version, 'all' );
+									wp_enqueue_script( $this->plugin_name . 'bootstrapjs', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
+					}
+			}
+		}
 	}
 
 	/**

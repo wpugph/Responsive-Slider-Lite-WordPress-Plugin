@@ -1,2 +1,2 @@
 # responsive-slider-lite
-WordPress slider lite
+Responsive Slider Lite

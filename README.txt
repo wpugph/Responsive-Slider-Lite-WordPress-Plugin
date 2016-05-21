@@ -18,7 +18,8 @@ A lightweight responsive slider utilizing bootstrap
 
 1. Upload `responsive-slider-lite.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Use shortcode
+3. Use shortcode [rsliderl] to load all images or
+[rsliderl cat="category name"] to load a specific set of images from a category
 
 == Frequently Asked Questions ==
 
@@ -29,22 +30,20 @@ You need to put the shortcode first in your content and enable the plugin
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
+
 
 
 == Changelog ==
 
 = 1.0 =
-* Detect if bootstrap is already used
-* Can be categorized
+* Detect if bootstrap is already used from elsewhere
+* Can be categorized, images can be assigned to multiple categories
 * Drag and Drop reordering of the image sequence
-* Loadable via shortcodes
+* Loadable via shortcode or in template files
 
 * Access can be restricted on certain user groups
 * Options page -  max image size can be defined so images can be auto cropped
+
 
 
 == Upgrade Notice ==

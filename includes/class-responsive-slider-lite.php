@@ -170,6 +170,7 @@ class Responsive_Slider_Lite {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+
 	}
 
 	/**
@@ -296,7 +297,7 @@ class Responsive_Slider_Lite {
 				);
 				$args = array(
 					'labels'                     => $labels,
-					'hierarchical'               => false,
+					'hierarchical'               => true,
 					'public'                     => true,
 					'show_ui'                    => true,
 					'show_admin_column'          => true,
@@ -312,36 +313,16 @@ class Responsive_Slider_Lite {
 
 	public function homeslider_style_admin() {
 
-		add_filter( 'manage_edit-homeslider_columns', 'set_custom_edit_homeslider_columns' );
-		add_action( 'manage_homeslider_posts_custom_column' , 'custom_homeslider_columns', 10, 2 );
-
-		function set_custom_edit_homeslider_columns( $columns ) {
-		    $columns['title'] = __( 'Image Title' );
-		    $columns['featured_image'] = __( 'Image' );
-		    return $columns;
-		}
-
-		function custom_homeslider_columns( $column, $post_id ) {
-		    switch ( $column ) {
-		        case 'title' :
-		            echo get_post_meta( $post_id, '_quote_post_pairname', true );
-		            break;
-		        case 'thumbnail' :
-		            echo get_post_meta( $post_id, 'thumbnail', true );
-		            break;
-		    }
-		}
-
 		function homeslider_get_featured_image($post_ID) {
 		    $post_thumbnail_id = get_post_thumbnail_id($post_ID);
 		    if ($post_thumbnail_id) {
-		        $post_thumbnail_img = wp_get_attachment_image_src($post_thumbnail_id, 'featured_preview');
+		        $post_thumbnail_img = wp_get_attachment_image_src($post_thumbnail_id, 'featured');
 		        return $post_thumbnail_img[0];
 		    }
 		}
 		// ADD NEW COLUMN
 		function homeslider_columns_head($defaults) {
-		    $defaults['featured_image'] = 'Featured Image';
+		    $defaults['featured_image'] = __('Featured Image', 'responsive_slider_l');
 		    return $defaults;
 		}
 		// SHOW THE FEATURED IMAGE
@@ -354,72 +335,73 @@ class Responsive_Slider_Lite {
 		    }
 		}
 
-		add_filter('manage_posts_columns', 'homeslider_columns_head');
-		add_action('manage_posts_custom_column', 'homeslider_columns_content', 9, 2);
-
+		add_filter('manage_responsive_slider_l_posts_columns', 'homeslider_columns_head');
+		add_action('manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2);
 
 	}
 
+	//resgister shortcode
 	public function activate_slider_responsive_sc() {
-		function responsive_slider_lite_func( $atts ) {
-		    $a = shortcode_atts( array(
-		        'foo' => 'something',
-		        'bar' => 'something else',
-		    ), $atts );
+		function responsive_slider_lite_func( $options ) {
+		    $att = shortcode_atts( array(
+		        'cat' => '',
+		    ), $options );
+				$cat = "{$att['cat']}";
+				$args = array(
+						'post_type' => 'responsive_slider_l',
+						'taxonomy' => 'responsive_slider_cat',
+						'term' => $cat,
+				);
+				$loop = new WP_Query( $args );
+				render_slider_front($loop);
+				//var_dump($cat);
+		    return;
+		}
 
-				$test = "fo = {$a['foo']} + 1";
-
-				  $args = array( 'post_type' => 'responsive_slider_l' );
-				  $loop = new WP_Query( $args );
-				  $c = 0;
-				  $class = '';
-				 ?>
-				<div class="container">
-				   <br>
-				   <div id="myCarousel" class="carousel slide" data-ride="carousel">
-				     <div class="carousel-inner" role="listbox">
-				       <?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
-				         <?php
-				           $c++;
-				           if ( $c == 1 ) {
-				             $class = ' active';
-				           } else {
-				             $class = '';
-				           };
-				          ?>
-				         <div class="item<?php echo $class ?>">
-				          <?php
-				            //$feat_image_size = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ));
-				            $feat_image = wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) );
-				            echo '<img src="' . $feat_image . '" alt="" width="" height="">' ;
-				            //echo '<div class="carousel-caption">';
-				            //echo '<h3></h3>';
-				            //echo '<p></p>';
-				            //echo '</div>';
-				          ?>
-				        </div>
-				      <?php endwhile; ?>
-				    </div>
-				    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-				      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-				      <span class="sr-only">Previous</span>
-				    </a>
-				    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-				      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				      <span class="sr-only">Next</span>
-				    </a>
-				  </div>
+		function render_slider_front($loop) {
+			?>
+			<div class="container-fluid">
+				 <br>
+				 <div id="myCarousel" class="carousel slide" data-ride="carousel">
+					 <div class="carousel-inner" role="listbox">
+						 <?php
+						 $c = 0;
+						 $class = '';
+						 while ( $loop->have_posts() ) : $loop->the_post(); ?>
+							 <?php
+								 $c++;
+								 if ( $c == 1 ) {
+									 $class = ' active';
+								 } else {
+									 $class = '';
+								 };
+								?>
+							 <div class="item<?php echo $class ?>">
+								<?php
+									//$feat_image_size = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ));
+									$feat_image = wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) );
+									echo '<img src="' . $feat_image . '" alt="" width="" height="">' ;
+									//echo '<div class="carousel-caption">';
+									//echo '<h3></h3>';
+									//echo '<p></p>';
+									//echo '</div>';
+								?>
+							</div>
+						<?php endwhile; ?>
+					</div>
+					<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
 				</div>
-
-				<?php
-
-		    return $test;
+			</div>
+			<?php
 		}
 		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
-
-
 	}
-
-
 
 }
