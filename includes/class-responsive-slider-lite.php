@@ -218,15 +218,15 @@ class Responsive_Slider_Lite {
 				// Register Slider CPT
 				function homeslider_post_type() {
 					$labels = array(
-						'name'                  => _x( 'Slider', 'Post Type General Name', 'responsive_slider_lite' ),
-						'singular_name'         => _x( 'Slider', 'Post Type Singular Name', 'responsive_slider_lite' ),
-						'menu_name'             => __( 'Slider', 'responsive_slider_lite' ),
-						'name_admin_bar'        => __( 'Slider', 'responsive_slider_lite' ),
+						'name'                  => _x( 'Slider Lite', 'Post Type General Name', 'responsive_slider_lite' ),
+						'singular_name'         => _x( 'Slider Lite', 'Post Type Singular Name', 'responsive_slider_lite' ),
+						'menu_name'             => __( 'Slider Lite', 'responsive_slider_lite' ),
+						'name_admin_bar'        => __( 'Slider Lite', 'responsive_slider_lite' ),
 						'archives'              => __( 'Slider Archives', 'responsive_slider_lite' ),
 						'parent_item_colon'     => __( 'Parent Item:', 'responsive_slider_lite' ),
 						'all_items'             => __( 'All Sliders', 'responsive_slider_lite' ),
-						'add_new_item'          => __( 'Add New Slider', 'responsive_slider_lite' ),
-						'add_new'               => __( 'Add New Slider', 'responsive_slider_lite' ),
+						'add_new_item'          => __( 'Add New Image', 'responsive_slider_lite' ),
+						'add_new'               => __( 'Add New Image', 'responsive_slider_lite' ),
 						'new_item'              => __( 'New Slider', 'responsive_slider_lite' ),
 						'edit_item'             => __( 'Edit Slider', 'responsive_slider_lite' ),
 						'update_item'           => __( 'Update Slider', 'responsive_slider_lite' ),
@@ -245,7 +245,7 @@ class Responsive_Slider_Lite {
 						'filter_items_list'     => __( 'Filter items list', 'responsive_slider_lite' ),
 					);
 					$args = array(
-						'label'                 => __( 'Slider', 'responsive_slider_lite' ),
+						'label'                 => __( 'Slider Lite', 'responsive_slider_lite' ),
 						'description'           => __( 'Slider Images', 'responsive_slider_lite' ),
 						'labels'                => $labels,
 						'supports'              => array( 'editor', 'title',  'thumbnail', 'page-attributes' ),
