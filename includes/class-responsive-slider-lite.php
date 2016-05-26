@@ -338,32 +338,39 @@ class Responsive_Slider_Lite {
 		add_filter('manage_responsive_slider_l_posts_columns', 'homeslider_columns_head');
 		add_action('manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2);
 
+
+
+
 	}
 
-	//resgister shortcode
+	//register shortcode
 	public function activate_slider_responsive_sc() {
 		function responsive_slider_lite_func( $options ) {
 		    $att = shortcode_atts( array(
 		        'cat' => '',
+						'title' => false,
+						'desc' => false,
 		    ), $options );
 				$cat = "{$att['cat']}";
+				$title = "{$att['title']}";
+				$desc = "{$att['desc']}";
 				$args = array(
 						'post_type' => 'responsive_slider_l',
 						'taxonomy' => 'responsive_slider_cat',
 						'term' => $cat,
 				);
 				$loop = new WP_Query( $args );
-				render_slider_front($loop);
+				render_slider_front($loop, $title, $desc, $cat);
 				//var_dump($cat);
 		    return;
 		}
 
-		function render_slider_front($loop) {
+		function render_slider_front($loop, $title, $desc, $cat) {
 			?>
 			<div class="container-fluid">
 				 <br>
 				 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-					 <div class="carousel-inner" role="listbox">
+					 <div class="carousel-inner <?php echo 'rslcat-' . $cat ?>" role="listbox">
 						 <?php
 						 $c = 0;
 						 $class = '';
@@ -378,13 +385,17 @@ class Responsive_Slider_Lite {
 								?>
 							 <div class="item<?php echo $class ?>">
 								<?php
-									//$feat_image_size = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ));
 									$feat_image = wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) );
 									echo '<img src="' . $feat_image . '" alt="" width="" height="">' ;
-									//echo '<div class="carousel-caption">';
-									//echo '<h3></h3>';
-									//echo '<p></p>';
-									//echo '</div>';
+									echo '<div class="carousel-caption">';
+									if ($title=="true") {
+										echo '<h3>' . Get_the_title() . '</h3>';
+									} ;
+									if ($desc=="true") {
+										echo '<p>' . the_content() . '</p>';
+									} ;
+									echo '</div>';
+
 								?>
 							</div>
 						<?php endwhile; ?>
@@ -403,5 +414,7 @@ class Responsive_Slider_Lite {
 		}
 		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
 	}
+
+
 
 }
