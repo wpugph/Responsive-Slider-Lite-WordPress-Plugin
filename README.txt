@@ -8,7 +8,7 @@ Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A lightweight responsive slider utilizing the default custom post type and featured image. Served in the front-end using bootstrap. Image order can be arranged at the wp-admin using drag and drop.
+A lightweight responsive slider utilizing the default custom post type and featured image. Served in the front-end using bootstrap. 
 
 == Description ==
 
