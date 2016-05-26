@@ -268,6 +268,59 @@ class Responsive_Slider_Lite {
 					register_post_type( 'responsive_slider_l', $args );
 				}
 				add_action( 'init', 'homeslider_post_type', 0 );
+
+
+
+
+
+
+				add_action( 'init', 'codex_book_init' );
+/**
+ * Register a book post type.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/register_post_type
+ */
+function codex_book_init() {
+	$labels = array(
+		'name'               => _x( 'Books', 'post type general name', 'your-plugin-textdomain' ),
+		'singular_name'      => _x( 'Book', 'post type singular name', 'your-plugin-textdomain' ),
+		'menu_name'          => _x( 'Books', 'admin menu', 'your-plugin-textdomain' ),
+		'name_admin_bar'     => _x( 'Book', 'add new on admin bar', 'your-plugin-textdomain' ),
+		'add_new'            => _x( 'Add New', 'book', 'your-plugin-textdomain' ),
+		'add_new_item'       => __( 'Add New Book', 'your-plugin-textdomain' ),
+		'new_item'           => __( 'New Book', 'your-plugin-textdomain' ),
+		'edit_item'          => __( 'Edit Book', 'your-plugin-textdomain' ),
+		'view_item'          => __( 'View Book', 'your-plugin-textdomain' ),
+		'all_items'          => __( 'All Books', 'your-plugin-textdomain' ),
+		'search_items'       => __( 'Search Books', 'your-plugin-textdomain' ),
+		'parent_item_colon'  => __( 'Parent Books:', 'your-plugin-textdomain' ),
+		'not_found'          => __( 'No books found.', 'your-plugin-textdomain' ),
+		'not_found_in_trash' => __( 'No books found in Trash.', 'your-plugin-textdomain' )
+	);
+
+	$args = array(
+		'labels'             => $labels,
+                'description'        => __( 'Description.', 'your-plugin-textdomain' ),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'book' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+		'taxonomies'            => array( 'responsive_slider_cat' ),
+	);
+
+	register_post_type( 'book', $args );
+}
+
+
+
+
 			}
 
 			// Register Custom Taxonomy
@@ -338,8 +391,63 @@ class Responsive_Slider_Lite {
 		add_filter('manage_responsive_slider_l_posts_columns', 'homeslider_columns_head');
 		add_action('manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2);
 
+		//add a category filter
+		function add_category_filter() {
+			if (get_post_type()=='responsive_slider_l') {
+				global $typenow;
+				$args=array( 'public' => true, '_builtin' => false );
+				$post_types = get_post_types($args);
+				if ( in_array($typenow, $post_types) ) {
+					$filters = get_object_taxonomies($typenow);
+					foreach ($filters as $tax_slug) {
+						$tax_id = get_taxonomy($tax_slug);
+						if ( isset( $_GET[$tax_id->query_var] ) ) {
+							$tax_id_selected = $_GET[$tax_id->query_var];
+						} else {
+							$tax_id_selected = 'false';
+						}
+						wp_dropdown_categories(
+							array(
+								'show_option_all' => __('All '.$tax_id->label ),
+								'taxonomy' => $tax_slug,
+								'name' => $tax_id->name,
+								'orderby' => 'term_order',
+								'hierarchical' => $tax_id->hierarchical,
+								'show_count' => false,
+								'hide_empty' => true,
+								'selected' => $tax_id_selected,
+							)
+						);
+					}
+				}
+			}
+		}
 
+		//adding query variable in the url
+		function add_category_restriction($query) {
+			if (get_post_type()=='responsive_slider_l') {
+				global $pagenow;
+				global $typenow;
+				if ($pagenow=='edit.php') {
+					$filters = get_object_taxonomies($typenow);
+					foreach ($filters as $tax_slug) {
+						$var = &$query->query_vars[$tax_slug];
+						if ( isset($var) ) {
+							$term = get_term_by('id',$var,$tax_slug);
+								if ( is_object($term) ) {
+									$var = $term->slug;
+								} else {
+									$var = $term;
+								}
+						}
+					}
+				}
+				return $query;
+			}
+		}
 
+		add_action( 'restrict_manage_posts', 'add_category_filter' );
+		add_filter('parse_query','add_category_restriction');
 
 	}
 
@@ -361,7 +469,6 @@ class Responsive_Slider_Lite {
 				);
 				$loop = new WP_Query( $args );
 				render_slider_front($loop, $title, $desc, $cat);
-				//var_dump($cat);
 		    return;
 		}
 
