@@ -47,8 +47,8 @@ You need to put the shortcode first in any of your post/pages and enable the plu
 
 == Changelog ==
 
-= 1.0.3 =
-Fixed book post type issue
+= 1.0.4 =
+Fixed book post type issue and versioning
 
 = 1.0.1 =
 * Use title and wp-content for the image overlays
