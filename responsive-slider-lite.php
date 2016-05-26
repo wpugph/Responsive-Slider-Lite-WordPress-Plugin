@@ -16,7 +16,7 @@
  * Plugin Name:       Responsive Slider Lite
  * Plugin URI:        http://carlalberto.ml/plugins
  * Description:       A lightweight responsive slider utilizing bootstrap
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Carl Alberto
  * Author URI:        http://carlalberto.ml/
  * License:           GPL-2.0+

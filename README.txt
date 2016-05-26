@@ -37,7 +37,7 @@ Show Image description:
 
 = Why are the images not appearing=
 
-You need to put the shortcode first in your content and enable the plugin
+You need to put the shortcode first in any of your post/pages and enable the plugin
 
 
 == Screenshots ==
@@ -47,18 +47,19 @@ You need to put the shortcode first in your content and enable the plugin
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* Use title and wp-content for the image overlays
+* Added category filters in the admin list
+* Sort by category under the default admin list
+
+= 1.0.0 =
 * Can be categorized, images can be assigned to multiple categories
 * Drag and Drop reordering of the image sequence
 * Loadable via shortcode or in template files
 * Detect if bootstrap is already used from elsewhere
-* Use title and wp-content for the image overlays
 
 In progress features:
-* Access can be restricted on certain user groups
-*
 * Options page -  max image size can be defined so images can be auto cropped or set to a standard size, transition delay
 * Multiple template to suit end user tastes
 * Different transitions
 * thumbnail option
-* Sort by category under the default admin list
