@@ -268,46 +268,47 @@ class Responsive_Slider_Lite {
 					register_post_type( 'responsive_slider_l', $args );
 				}
 				add_action( 'init', 'homeslider_post_type', 0 );
+
+				// Register Custom Taxonomy
+				function responsive_slider_l_taxonomy() {
+
+					$labels = array(
+						'name'                       => _x( 'Slider Categories', 'Taxonomy General Name', 'responsive_slider_l' ),
+						'singular_name'              => _x( 'Slider Category', 'Taxonomy Singular Name', 'responsive_slider_l' ),
+						'menu_name'                  => __( 'Slider Category', 'responsive_slider_l' ),
+						'all_items'                  => __( 'All Slider Category', 'responsive_slider_l' ),
+						'parent_item'                => __( 'Parent Slider Category', 'responsive_slider_l' ),
+						'parent_item_colon'          => __( 'Parent Slider Category:', 'responsive_slider_l' ),
+						'new_item_name'              => __( 'New Slider Category', 'responsive_slider_l' ),
+						'add_new_item'               => __( 'Add New Slider Category', 'responsive_slider_l' ),
+						'edit_item'                  => __( 'Edit Slider Category', 'responsive_slider_l' ),
+						'update_item'                => __( 'Update Slider Category', 'responsive_slider_l' ),
+						'view_item'                  => __( 'View Slider Category', 'responsive_slider_l' ),
+						'separate_items_with_commas' => __( 'Separate Slider Category with commas', 'responsive_slider_l' ),
+						'add_or_remove_items'        => __( 'Add or remove Slider Category', 'responsive_slider_l' ),
+						'choose_from_most_used'      => __( 'Choose from the most used', 'responsive_slider_l' ),
+						'popular_items'              => __( 'Popular Slider Category', 'responsive_slider_l' ),
+						'search_items'               => __( 'Search Slider Category', 'responsive_slider_l' ),
+						'not_found'                  => __( 'Not Found', 'responsive_slider_l' ),
+						'no_terms'                   => __( 'No Slider Category', 'responsive_slider_l' ),
+						'items_list'                 => __( 'Items Slider Category', 'responsive_slider_l' ),
+						'items_list_navigation'      => __( 'Items list navigation', 'responsive_slider_l' ),
+					);
+					$args = array(
+						'labels'                     => $labels,
+						'hierarchical'               => true,
+						'public'                     => true,
+						'show_ui'                    => true,
+						'show_admin_column'          => true,
+						'show_in_nav_menus'          => true,
+						'show_tagcloud'              => true,
+					);
+					register_taxonomy( 'responsive_slider_cat', array( 'responsive_slider_l' ), $args );
+
+				}
+				add_action( 'init', 'responsive_slider_l_taxonomy', 0 );
+
 			}
-
-			// Register Custom Taxonomy
-			function responsive_slider_l_taxonomy() {
-
-				$labels = array(
-					'name'                       => _x( 'Slider Categories', 'Taxonomy General Name', 'responsive_slider_l' ),
-					'singular_name'              => _x( 'Slider Category', 'Taxonomy Singular Name', 'responsive_slider_l' ),
-					'menu_name'                  => __( 'Slider Category', 'responsive_slider_l' ),
-					'all_items'                  => __( 'All Slider Category', 'responsive_slider_l' ),
-					'parent_item'                => __( 'Parent Slider Category', 'responsive_slider_l' ),
-					'parent_item_colon'          => __( 'Parent Slider Category:', 'responsive_slider_l' ),
-					'new_item_name'              => __( 'New Slider Category', 'responsive_slider_l' ),
-					'add_new_item'               => __( 'Add New Slider Category', 'responsive_slider_l' ),
-					'edit_item'                  => __( 'Edit Slider Category', 'responsive_slider_l' ),
-					'update_item'                => __( 'Update Slider Category', 'responsive_slider_l' ),
-					'view_item'                  => __( 'View Slider Category', 'responsive_slider_l' ),
-					'separate_items_with_commas' => __( 'Separate Slider Category with commas', 'responsive_slider_l' ),
-					'add_or_remove_items'        => __( 'Add or remove Slider Category', 'responsive_slider_l' ),
-					'choose_from_most_used'      => __( 'Choose from the most used', 'responsive_slider_l' ),
-					'popular_items'              => __( 'Popular Slider Category', 'responsive_slider_l' ),
-					'search_items'               => __( 'Search Slider Category', 'responsive_slider_l' ),
-					'not_found'                  => __( 'Not Found', 'responsive_slider_l' ),
-					'no_terms'                   => __( 'No Slider Category', 'responsive_slider_l' ),
-					'items_list'                 => __( 'Items Slider Category', 'responsive_slider_l' ),
-					'items_list_navigation'      => __( 'Items list navigation', 'responsive_slider_l' ),
-				);
-				$args = array(
-					'labels'                     => $labels,
-					'hierarchical'               => true,
-					'public'                     => true,
-					'show_ui'                    => true,
-					'show_admin_column'          => true,
-					'show_in_nav_menus'          => true,
-					'show_tagcloud'              => true,
-				);
-				register_taxonomy( 'responsive_slider_cat', array( 'responsive_slider_l' ), $args );
-
-			}
-			add_action( 'init', 'responsive_slider_l_taxonomy', 0 );
 
 	}
 
