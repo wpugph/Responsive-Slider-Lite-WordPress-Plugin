@@ -341,11 +341,10 @@ class Responsive_Slider_Lite {
 
 		//add a category filter
 		function add_category_filter() {
-			if (get_post_type()=='responsive_slider_l') {
 				global $typenow;
 				$args=array( 'public' => true, '_builtin' => false );
 				$post_types = get_post_types($args);
-				if ( in_array($typenow, $post_types) ) {
+				if ( ( in_array($typenow, $post_types) ) && ($typenow=='responsive_slider_l') ) {
 					$filters = get_object_taxonomies($typenow);
 					foreach ($filters as $tax_slug) {
 						$tax_id = get_taxonomy($tax_slug);
@@ -368,15 +367,14 @@ class Responsive_Slider_Lite {
 						);
 					}
 				}
-			}
 		}
 
 		//adding query variable in the url
 		function add_category_restriction($query) {
-			if (get_post_type()=='responsive_slider_l') {
 				global $pagenow;
 				global $typenow;
-				if ($pagenow=='edit.php') {
+				//echo $typenow;
+				if (($pagenow=='edit.php') && ($typenow=='responsive_slider_l')) {
 					$filters = get_object_taxonomies($typenow);
 					foreach ($filters as $tax_slug) {
 						$var = &$query->query_vars[$tax_slug];
@@ -391,7 +389,6 @@ class Responsive_Slider_Lite {
 					}
 				}
 				return $query;
-			}
 		}
 
 		add_action( 'restrict_manage_posts', 'add_category_filter' );
@@ -422,8 +419,7 @@ class Responsive_Slider_Lite {
 
 		function render_slider_front($loop, $title, $desc, $cat) {
 			?>
-			<div class="container-fluid">
-				 <br>
+			<div class="container-fluid slidermyCarousel">
 				 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 					 <div class="carousel-inner <?php echo 'rslcat-' . $cat ?>" role="listbox">
 						 <?php
@@ -466,6 +462,7 @@ class Responsive_Slider_Lite {
 				</div>
 			</div>
 			<?php
+			wp_reset_postdata();
 		}
 		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
 	}
