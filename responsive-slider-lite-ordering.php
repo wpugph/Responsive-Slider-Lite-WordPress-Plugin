@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 class Responsive_Slider_Lite_Ordering {
 
 	public static function get_instance() {
