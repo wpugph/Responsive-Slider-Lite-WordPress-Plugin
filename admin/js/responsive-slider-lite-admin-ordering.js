@@ -18,14 +18,14 @@ function update_responsive_slider_lite_ordering_callback(response) {
 		if ( null !== inline_key && updated_position.hasOwnProperty(reference_position) ) {
 			var dom_menu_order = inline_reference_position.querySelector('.menu_order');
 
-			if ( undefined !== updated_position[reference_position]['menu_order'] ) {
+			if ( undefined !== updated_position[reference_position]['.menu_order'] ) {
 				if ( null !== dom_menu_order ) {
-					dom_menu_order.innerHTML = updated_position[reference_position]['menu_order'];
+					dom_menu_order.innerHTML = updated_position[reference_position]['.menu_order'];
 				}
 
 				var dom_of_post_parent = inline_key.querySelector('.post_parent');
 				if ( null !== dom_of_post_parent ) {
-					dom_of_post_parent.innerHTML = updated_position[reference_position]['post_parent'];
+					dom_of_post_parent.innerHTML = updated_position[reference_position]['.post_parent'];
 				}
 
 				var post_title = null;
@@ -35,7 +35,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 				}
 
 				var dashes = 0;
-				while ( dashes < updated_position[reference_position]['depth'] ) {
+				while ( dashes < updated_position[reference_position]['.depth'] ) {
 					post_title = '&mdash; ' + post_title;
 					dashes++;
 				}
@@ -52,11 +52,11 @@ function update_responsive_slider_lite_ordering_callback(response) {
 	if ( changes.next ) {
 		jQuery.post( ajaxurl, {
 			action: 'responsive_slider_lite_ordering',
-			id: changes.next['id'],
-			previd: changes.next['previd'],
-			nextid: changes.next['nextid'],
-			start: changes.next['start'],
-			excluded: changes.next['excluded']
+			id: changes.next['.id'],
+			previd: changes.next['.previd'],
+			nextid: changes.next['.nextid'],
+			start: changes.next['.start'],
+			excluded: changes.next['.excluded']
 		}, update_responsive_slider_lite_ordering_callback );
 	} else {
 		jQuery('.spo-updating-row').removeClass('spo-updating-row');
@@ -64,7 +64,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 	}
 }
 
-var post_table_to_order = jQuery(".wp-list-table tbody");
+var post_table_to_order = jQuery('.wp-list-table tbody');
 post_table_to_order.sortable({
 	items: '> tr',
 	cursor: 'move',
@@ -72,7 +72,7 @@ post_table_to_order.sortable({
 	containment: 'table.widefat',
 	cancel:	'.inline-edit-row',
 	distance: 2,
-	opacity: .8,
+	opacity: 0.8,
 	tolerance: 'pointer',
 	start: function(e, ui){
 		if ( typeof(inlineEditPost) !== 'undefined' ) {
@@ -85,7 +85,7 @@ post_table_to_order.sortable({
 		for ( var i=0; i<children.length; i++ ) {
 			var selector = jQuery(children[i]);
 			selector.width( selector.width() );
-		};
+		}
 		return ui;
 	},
 	stop: function(e, ui) {
