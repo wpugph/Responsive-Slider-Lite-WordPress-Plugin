@@ -1,32 +1,34 @@
-function update_responsive_slider_lite_ordering_callback(response) {
-	// load temporary holder for json response
+function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
+
+	// Load temporary holder for json response.
 	var changes = jQuery.parseJSON( response );
-	// make sure script only fires on children
+
+	// Make sure script only fires on children.
 	if ( 'children' === response ) {
 		window.location.reload();
 		return;
 	}
 
-	var updated_position = changes.updated_position;
-	for ( var reference_position in updated_position ) {
+	var updated_Position = changes.updated_Position;
+	for ( var reference_position in updated_Position ) {
 		if ( 'next' === reference_position ) {
 			continue;
 		}
 
 		var inline_key = document.getElementById( 'inline_' + reference_position );
 
-		if ( null !== inline_key && updated_position.hasOwnProperty( reference_position ) ) {
+		if ( null !== inline_key && updated_Position.hasOwnProperty( reference_position ) ) {
 			var inline_reference_position;
 			var dom_menu_order = inline_reference_position.querySelector( '.menu_order' );
 
-			if ( undefined !== updated_position[reference_position]['.menu_order'] ) {
+			if ( undefined !== updated_Position[reference_position]['.menu_order'] ) {
 				if ( null !== dom_menu_order ) {
-					dom_menu_order.innerHTML = updated_position[reference_position]['.menu_order'];
+					dom_menu_order.innerHTML = updated_Position[reference_position]['.menu_order'];
 				}
 
 				var dom_of_post_parent = inline_key.querySelector( '.post_parent' );
 				if ( null !== dom_of_post_parent ) {
-					dom_of_post_parent.innerHTML = updated_position[reference_position]['.post_parent'];
+					dom_of_post_parent.innerHTML = updated_Position[reference_position]['.post_parent'];
 				}
 
 				var post_title = null;
@@ -36,7 +38,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 				}
 
 				var dashes = 0;
-				while ( dashes < updated_position[reference_position]['.depth'] ) {
+				while ( dashes < updated_Position[reference_position]['.depth'] ) {
 					post_title = '&mdash; ' + post_title;
 					dashes++;
 				}
@@ -45,7 +47,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 					dom_row_title.innerHTML = post_title;
 				}
 			} else if ( null !== dom_menu_order ) {
-				dom_menu_order.innerHTML = updated_position[reference_position];
+				dom_menu_order.innerHTML = updated_Position[reference_position];
 			}
 		}
 	}
@@ -58,7 +60,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 			nextid: changes.next['.nextid'],
 			start: changes.next['.start'],
 			excluded: changes.next['.excluded']
-		}, update_responsive_slider_lite_ordering_callback );
+		}, update_Responsive_Slider_Lite_Ordering_Callback );
 	} else {
 		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
 		post_table_to_order.removeClass( 'spo-updating' ).sortable( 'enable' );
@@ -117,7 +119,7 @@ post_table_to_order.sortable({
 			id: postid,
 			previd: prevpostid,
 			nextid: nextpostid
-		}, update_responsive_slider_lite_ordering_callback );
+		}, update_Responsive_Slider_Lite_Ordering_Callback );
 
 		var table_rows = document.querySelectorAll( 'tr.iedit' ),
 			table_row_count = table_rows.length;
