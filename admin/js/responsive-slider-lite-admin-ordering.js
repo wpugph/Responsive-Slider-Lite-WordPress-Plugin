@@ -1,7 +1,8 @@
-function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
+function updateResponsiveSliderLiteOrderingCallback( response ) {
 
 	// Load temporary holder for json response.
 	var changes = jQuery.parseJSON( response );
+	var referencePosition;
 
 	// Make sure script only fires on children.
 	if ( 'children' === response ) {
@@ -9,45 +10,45 @@ function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 		return;
 	}
 
-	var updated_Position = changes.updated_Position;
-	for ( var reference_position in updated_Position ) {
-		if ( 'next' === reference_position ) {
+	var updatedPosition = changes.updatedPosition;
+	for (  referencePosition in updatedPosition ) {
+		if ( 'next' === referencePosition ) {
 			continue;
 		}
 
-		var inline_key = document.getElementById( 'inline_' + reference_position );
+		var inlineKey = document.getElementById( 'inline_' + referencePosition );
 
-		if ( null !== inline_key && updated_Position.hasOwnProperty( reference_position ) ) {
-			var inline_reference_position;
-			var dom_menu_order = inline_reference_position.querySelector( '.menu_order' );
+		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
+			var inline_referencePosition;
+			var dom_menu_order = inline_referencePosition.querySelector( '.menu_order' );
 
-			if ( undefined !== updated_Position[reference_position]['.menu_order'] ) {
+			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
 				if ( null !== dom_menu_order ) {
-					dom_menu_order.innerHTML = updated_Position[reference_position]['.menu_order'];
+					dom_menu_order.innerHTML = updatedPosition[referencePosition]['.menu_order'];
 				}
 
-				var dom_of_post_parent = inline_key.querySelector( '.post_parent' );
+				var dom_of_post_parent = inlineKey.querySelector( '.post_parent' );
 				if ( null !== dom_of_post_parent ) {
-					dom_of_post_parent.innerHTML = updated_Position[reference_position]['.post_parent'];
+					dom_of_post_parent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
 				}
 
 				var post_title = null;
-				var dom_post_title = inline_reference_position.querySelector( '.post_title' );
+				var dom_post_title = inline_referencePosition.querySelector( '.post_title' );
 				if ( null !== dom_post_title ) {
 					post_title = dom_post_title.innerHTML;
 				}
 
 				var dashes = 0;
-				while ( dashes < updated_Position[reference_position]['.depth'] ) {
+				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
 					post_title = '&mdash; ' + post_title;
 					dashes++;
 				}
-				var dom_row_title = inline_key.parentNode.querySelector( '.row-title' );
+				var dom_row_title = inlineKey.parentNode.querySelector( '.row-title' );
 				if ( null !== dom_row_title && null !== post_title ) {
 					dom_row_title.innerHTML = post_title;
 				}
 			} else if ( null !== dom_menu_order ) {
-				dom_menu_order.innerHTML = updated_Position[reference_position];
+				dom_menu_order.innerHTML = updatedPosition[referencePosition];
 			}
 		}
 	}
@@ -60,7 +61,7 @@ function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 			nextid: changes.next['.nextid'],
 			start: changes.next['.start'],
 			excluded: changes.next['.excluded']
-		}, update_Responsive_Slider_Lite_Ordering_Callback );
+		}, updateResponsiveSliderLiteOrderingCallback );
 	} else {
 		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
 		post_table_to_order.removeClass( 'spo-updating' ).sortable( 'enable' );
@@ -119,7 +120,7 @@ post_table_to_order.sortable({
 			id: postid,
 			previd: prevpostid,
 			nextid: nextpostid
-		}, update_Responsive_Slider_Lite_Ordering_Callback );
+		}, updateResponsiveSliderLiteOrderingCallback );
 
 		var table_rows = document.querySelectorAll( 'tr.iedit' ),
 			table_row_count = table_rows.length;
