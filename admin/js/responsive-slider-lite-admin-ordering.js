@@ -1,6 +1,11 @@
 function update_responsive_slider_lite_ordering_callback(response) {
 	//load temporary holder for json response
 	var changes = jQuery.parseJSON( response );
+
+	var ajaxurl;
+	var inlineEditPost;
+
+
 	//make sure script only fires on children
 	if ( 'children' === response ) {
 		window.location.reload();
