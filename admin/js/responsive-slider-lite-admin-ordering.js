@@ -1,11 +1,6 @@
 function update_responsive_slider_lite_ordering_callback(response) {
 	//load temporary holder for json response
 	var changes = jQuery.parseJSON( response );
-
-	var ajaxurl;
-	var inlineEditPost;
-
-
 	//make sure script only fires on children
 	if ( 'children' === response ) {
 		window.location.reload();
@@ -21,6 +16,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 		var inline_key = document.getElementById('inline_' + reference_position);
 
 		if ( null !== inline_key && updated_position.hasOwnProperty(reference_position) ) {
+			var inline_reference_position;
 			var dom_menu_order = inline_reference_position.querySelector('.menu_order');
 
 			if ( undefined !== updated_position[reference_position]['.menu_order'] ) {
@@ -55,7 +51,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 	}
 
 	if ( changes.next ) {
-		jQuery.post( ajaxurl, {
+		jQuery.post( ajaxurl, { // jshint ignore:line
 			action: 'responsive_slider_lite_ordering',
 			id: changes.next['.id'],
 			previd: changes.next['.previd'],
@@ -69,7 +65,7 @@ function update_responsive_slider_lite_ordering_callback(response) {
 	}
 }
 
-var post_table_to_order = jQuery('.wp-list-table tbody');
+var post_table_to_order = jQuery(".wp-list-table tbody");
 post_table_to_order.sortable({
 	items: '> tr',
 	cursor: 'move',
@@ -80,6 +76,7 @@ post_table_to_order.sortable({
 	opacity: 0.8,
 	tolerance: 'pointer',
 	start: function(e, ui){
+		var inlineEditPost;
 		if ( typeof(inlineEditPost) !== 'undefined' ) {
 			inlineEditPost.revert();
 		}
@@ -115,7 +112,12 @@ post_table_to_order.sortable({
 			nextpostid = nextpost.attr('id').substr(5);
 		}
 
-		jQuery.post( ajaxurl, { action: 'responsive_slider_lite_ordering', id: postid, previd: prevpostid, nextid: nextpostid }, update_responsive_slider_lite_ordering_callback );
+		jQuery.post( ajaxurl, { // jshint ignore:line
+			action: 'responsive_slider_lite_ordering',
+			id: postid,
+			previd: prevpostid,
+			nextid: nextpostid
+		}, update_responsive_slider_lite_ordering_callback );
 
 		var table_rows = document.querySelectorAll('tr.iedit'),
 			table_row_count = table_rows.length;

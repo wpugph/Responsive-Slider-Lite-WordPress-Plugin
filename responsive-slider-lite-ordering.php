@@ -52,7 +52,8 @@ class Responsive_Slider_Lite_Ordering {
 		if (get_post_type()=='responsive_slider_l') {
 			$orderby = get_query_var('orderby');
 			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && $orderby['menu_order'] == 'ASC' ) ) {
-				$script_name = 'admin\js\responsive-slider-lite-admin-ordering.min.js';
+				// Need to me minified later.
+				$script_name = 'admin\js\responsive-slider-lite-admin-ordering.js';
 				wp_enqueue_script( 'responsive-slider-lite-ordering', plugins_url( $script_name, __FILE__ ), array('jquery-ui-sortable'), '2.1', true );
 				wp_enqueue_style( 'responsive-slider-lite-ordering', plugins_url( 'admin/css/responsive-slider-lite-admin.min.css', __FILE__ ) );
 			}
