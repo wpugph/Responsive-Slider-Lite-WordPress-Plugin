@@ -76,7 +76,7 @@ class Responsive_Slider_Lite_Ordering {
 	public static function wp() {
 		if ( get_post_type() === 'responsive_slider_l' ) {
 			$orderby = get_query_var( 'orderby' );
-			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && $orderby['menu_order'] === 'ASC' ) ) {
+			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && ( 'ASC' === $orderby['menu_order'] ) ) ) {
 				// TODO:Need to me minified later.
 				$script_name = 'admin\js\responsive-slider-lite-admin-ordering.js';
 				wp_enqueue_script( 'responsive-slider-lite-ordering', plugins_url( $script_name, __FILE__ ), array( 'jquery-ui-sortable' ), '2.1', true );

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -79,7 +78,7 @@ class Responsive_Slider_Lite_Public {
 		if ( $wp_styles instanceof WP_Styles ) {
 			foreach ( $wp_styles->queue as $handle ) {
 				$obj = $wp_styles->registered[ $handle ];
-				if ( strpos( $obj->src, 'bootstrap' ) == false ) {
+				if ( strpos( $obj->src, 'bootstrap' ) === false ) {
 						wp_enqueue_style( $this->plugin_name . 'bootstrapcss', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/css/bootstrap.min.css', array(), $this->version, 'all' );
 							wp_enqueue_script( $this->plugin_name . 'bootstrapjs', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
 				}
@@ -108,10 +107,6 @@ class Responsive_Slider_Lite_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/responsive-slider-lite-public.js', array( 'jquery' ), $this->version, false );
 
-	}
-
-	public function test1() {
-		return 'testst';
 	}
 
 }
