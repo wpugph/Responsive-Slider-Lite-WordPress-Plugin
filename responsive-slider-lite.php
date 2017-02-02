@@ -76,9 +76,8 @@ function run_responsive_slider_lite() {
 
 	$plugin->run();
 
-//	$plugin_admin = new Responsive_Slider_Lite_Admin();
-//	$plugin_admin->homeslider_style_admin();
-// Responsive_Slider_Lite_Admin::homeslider_style_admin();
-
+	// $plugin_admin = new Responsive_Slider_Lite_Admin();
+	// $plugin_admin->homeslider_style_admin();
+	// Responsive_Slider_Lite_Admin::homeslider_style_admin();
 }
 run_responsive_slider_lite();

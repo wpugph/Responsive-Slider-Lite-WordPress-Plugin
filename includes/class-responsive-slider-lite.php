@@ -170,7 +170,6 @@ class Responsive_Slider_Lite {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-
 	}
 
 	/**
@@ -215,188 +214,188 @@ class Responsive_Slider_Lite {
 
 
 	public function register_homeslider() {
-			if ( ! function_exists('homeslider_post_type') ) {
-				// Register Slider CPT
-				function homeslider_post_type() {
-					$labels = array(
-						'name'                  => _x( 'Slider Lite', 'Post Type General Name', 'responsive_slider_lite' ),
-						'singular_name'         => _x( 'Slider Lite', 'Post Type Singular Name', 'responsive_slider_lite' ),
-						'menu_name'             => __( 'Slider Lite', 'responsive_slider_lite' ),
-						'name_admin_bar'        => __( 'Slider Lite', 'responsive_slider_lite' ),
-						'archives'              => __( 'Slider Archives', 'responsive_slider_lite' ),
-						'parent_item_colon'     => __( 'Parent Item:', 'responsive_slider_lite' ),
-						'all_items'             => __( 'All Sliders', 'responsive_slider_lite' ),
-						'add_new_item'          => __( 'Add New Image', 'responsive_slider_lite' ),
-						'add_new'               => __( 'Add New Image', 'responsive_slider_lite' ),
-						'new_item'              => __( 'New Slider', 'responsive_slider_lite' ),
-						'edit_item'             => __( 'Edit Slider', 'responsive_slider_lite' ),
-						'update_item'           => __( 'Update Slider', 'responsive_slider_lite' ),
-						'view_item'             => __( 'View Slider', 'responsive_slider_lite' ),
-						'search_items'          => __( 'Search Slider', 'responsive_slider_lite' ),
-						'not_found'             => __( 'Not found', 'responsive_slider_lite' ),
-						'not_found_in_trash'    => __( 'Not found in Trash', 'responsive_slider_lite' ),
-						'featured_image'        => __( 'Featured Image', 'responsive_slider_lite' ),
-						'set_featured_image'    => __( 'Set featured image', 'businessportfolio' ),
-						'remove_featured_image' => __( 'Remove featured image', 'responsive_slider_lite' ),
-						'use_featured_image'    => __( 'Use as featured image', 'responsive_slider_lite' ),
-						'insert_into_item'      => __( 'Insert into item', 'responsive_slider_lite' ),
-						'uploaded_to_this_item' => __( 'Uploaded to this item', 'responsive_slider_lite' ),
-						'items_list'            => __( 'Items list', 'responsive_slider_lite' ),
-						'items_list_navigation' => __( 'Items list navigation', 'responsive_slider_lite' ),
-						'filter_items_list'     => __( 'Filter items list', 'responsive_slider_lite' ),
-					);
-					$args = array(
-						'label'                 => __( 'Slider Lite', 'responsive_slider_lite' ),
-						'description'           => __( 'Slider Images', 'responsive_slider_lite' ),
-						'labels'                => $labels,
-						'supports'              => array( 'editor', 'title',  'thumbnail', 'page-attributes' ),
-						'taxonomies'            => array( 'slider_cat' ),
-						'hierarchical'          => true,
-						'public'                => true,
-						'show_ui'               => true,
-						'show_in_menu'          => true,
-						'menu_position'         => 5,
-						'menu_icon'             => 'dashicons-format-gallery',
-						'show_in_admin_bar'     => true,
-						'show_in_nav_menus'     => true,
-						'can_export'            => true,
-						'has_archive'           => true,
-						'exclude_from_search'   => false,
-						'publicly_queryable'    => true,
-						'capability_type'       => 'page',
-					);
-					register_post_type( 'responsive_slider_l', $args );
-				}
-				add_action( 'init', 'homeslider_post_type', 0 );
+		if ( ! function_exists( 'homeslider_post_type' ) ) {
+			// Register Slider CPT
+			function homeslider_post_type() {
+				$labels = array(
+					'name'                  => _x( 'Slider Lite', 'Post Type General Name', 'responsive_slider_lite' ),
+					'singular_name'         => _x( 'Slider Lite', 'Post Type Singular Name', 'responsive_slider_lite' ),
+					'menu_name'             => __( 'Slider Lite', 'responsive_slider_lite' ),
+					'name_admin_bar'        => __( 'Slider Lite', 'responsive_slider_lite' ),
+					'archives'              => __( 'Slider Archives', 'responsive_slider_lite' ),
+					'parent_item_colon'     => __( 'Parent Item:', 'responsive_slider_lite' ),
+					'all_items'             => __( 'All Sliders', 'responsive_slider_lite' ),
+					'add_new_item'          => __( 'Add New Image', 'responsive_slider_lite' ),
+					'add_new'               => __( 'Add New Image', 'responsive_slider_lite' ),
+					'new_item'              => __( 'New Slider', 'responsive_slider_lite' ),
+					'edit_item'             => __( 'Edit Slider', 'responsive_slider_lite' ),
+					'update_item'           => __( 'Update Slider', 'responsive_slider_lite' ),
+					'view_item'             => __( 'View Slider', 'responsive_slider_lite' ),
+					'search_items'          => __( 'Search Slider', 'responsive_slider_lite' ),
+					'not_found'             => __( 'Not found', 'responsive_slider_lite' ),
+					'not_found_in_trash'    => __( 'Not found in Trash', 'responsive_slider_lite' ),
+					'featured_image'        => __( 'Featured Image', 'responsive_slider_lite' ),
+					'set_featured_image'    => __( 'Set featured image', 'businessportfolio' ),
+					'remove_featured_image' => __( 'Remove featured image', 'responsive_slider_lite' ),
+					'use_featured_image'    => __( 'Use as featured image', 'responsive_slider_lite' ),
+					'insert_into_item'      => __( 'Insert into item', 'responsive_slider_lite' ),
+					'uploaded_to_this_item' => __( 'Uploaded to this item', 'responsive_slider_lite' ),
+					'items_list'            => __( 'Items list', 'responsive_slider_lite' ),
+					'items_list_navigation' => __( 'Items list navigation', 'responsive_slider_lite' ),
+					'filter_items_list'     => __( 'Filter items list', 'responsive_slider_lite' ),
+				);
+				$args = array(
+					'label'                 => __( 'Slider Lite', 'responsive_slider_lite' ),
+					'description'           => __( 'Slider Images', 'responsive_slider_lite' ),
+					'labels'                => $labels,
+					'supports'              => array( 'editor', 'title',  'thumbnail', 'page-attributes' ),
+					'taxonomies'            => array( 'slider_cat' ),
+					'hierarchical'          => true,
+					'public'                => true,
+					'show_ui'               => true,
+					'show_in_menu'          => true,
+					'menu_position'         => 5,
+					'menu_icon'             => 'dashicons-format-gallery',
+					'show_in_admin_bar'     => true,
+					'show_in_nav_menus'     => true,
+					'can_export'            => true,
+					'has_archive'           => true,
+					'exclude_from_search'   => false,
+					'publicly_queryable'    => true,
+					'capability_type'       => 'page',
+				);
+				register_post_type( 'responsive_slider_l', $args );
+			}
+			add_action( 'init', 'homeslider_post_type', 0 );
 
-				// Register Custom Taxonomy
-				function responsive_slider_l_taxonomy() {
+			// Register Custom Taxonomy
+			function responsive_slider_l_taxonomy() {
 
-					$labels = array(
-						'name'                       => _x( 'Slider Categories', 'Taxonomy General Name', 'responsive_slider_l' ),
-						'singular_name'              => _x( 'Slider Category', 'Taxonomy Singular Name', 'responsive_slider_l' ),
-						'menu_name'                  => __( 'Slider Category', 'responsive_slider_l' ),
-						'all_items'                  => __( 'All Slider Category', 'responsive_slider_l' ),
-						'parent_item'                => __( 'Parent Slider Category', 'responsive_slider_l' ),
-						'parent_item_colon'          => __( 'Parent Slider Category:', 'responsive_slider_l' ),
-						'new_item_name'              => __( 'New Slider Category', 'responsive_slider_l' ),
-						'add_new_item'               => __( 'Add New Slider Category', 'responsive_slider_l' ),
-						'edit_item'                  => __( 'Edit Slider Category', 'responsive_slider_l' ),
-						'update_item'                => __( 'Update Slider Category', 'responsive_slider_l' ),
-						'view_item'                  => __( 'View Slider Category', 'responsive_slider_l' ),
-						'separate_items_with_commas' => __( 'Separate Slider Category with commas', 'responsive_slider_l' ),
-						'add_or_remove_items'        => __( 'Add or remove Slider Category', 'responsive_slider_l' ),
-						'choose_from_most_used'      => __( 'Choose from the most used', 'responsive_slider_l' ),
-						'popular_items'              => __( 'Popular Slider Category', 'responsive_slider_l' ),
-						'search_items'               => __( 'Search Slider Category', 'responsive_slider_l' ),
-						'not_found'                  => __( 'Not Found', 'responsive_slider_l' ),
-						'no_terms'                   => __( 'No Slider Category', 'responsive_slider_l' ),
-						'items_list'                 => __( 'Items Slider Category', 'responsive_slider_l' ),
-						'items_list_navigation'      => __( 'Items list navigation', 'responsive_slider_l' ),
-					);
-					$args = array(
-						'labels'                     => $labels,
-						'hierarchical'               => true,
-						'public'                     => true,
-						'show_ui'                    => true,
-						'show_admin_column'          => true,
-						'show_in_nav_menus'          => true,
-						'show_tagcloud'              => true,
-					);
-					register_taxonomy( 'responsive_slider_cat', array( 'responsive_slider_l' ), $args );
-
-				}
-				add_action( 'init', 'responsive_slider_l_taxonomy', 0 );
+				$labels = array(
+					'name'                       => _x( 'Slider Categories', 'Taxonomy General Name', 'responsive_slider_l' ),
+					'singular_name'              => _x( 'Slider Category', 'Taxonomy Singular Name', 'responsive_slider_l' ),
+					'menu_name'                  => __( 'Slider Category', 'responsive_slider_l' ),
+					'all_items'                  => __( 'All Slider Category', 'responsive_slider_l' ),
+					'parent_item'                => __( 'Parent Slider Category', 'responsive_slider_l' ),
+					'parent_item_colon'          => __( 'Parent Slider Category:', 'responsive_slider_l' ),
+					'new_item_name'              => __( 'New Slider Category', 'responsive_slider_l' ),
+					'add_new_item'               => __( 'Add New Slider Category', 'responsive_slider_l' ),
+					'edit_item'                  => __( 'Edit Slider Category', 'responsive_slider_l' ),
+					'update_item'                => __( 'Update Slider Category', 'responsive_slider_l' ),
+					'view_item'                  => __( 'View Slider Category', 'responsive_slider_l' ),
+					'separate_items_with_commas' => __( 'Separate Slider Category with commas', 'responsive_slider_l' ),
+					'add_or_remove_items'        => __( 'Add or remove Slider Category', 'responsive_slider_l' ),
+					'choose_from_most_used'      => __( 'Choose from the most used', 'responsive_slider_l' ),
+					'popular_items'              => __( 'Popular Slider Category', 'responsive_slider_l' ),
+					'search_items'               => __( 'Search Slider Category', 'responsive_slider_l' ),
+					'not_found'                  => __( 'Not Found', 'responsive_slider_l' ),
+					'no_terms'                   => __( 'No Slider Category', 'responsive_slider_l' ),
+					'items_list'                 => __( 'Items Slider Category', 'responsive_slider_l' ),
+					'items_list_navigation'      => __( 'Items list navigation', 'responsive_slider_l' ),
+				);
+				$args = array(
+					'labels'                     => $labels,
+					'hierarchical'               => true,
+					'public'                     => true,
+					'show_ui'                    => true,
+					'show_admin_column'          => true,
+					'show_in_nav_menus'          => true,
+					'show_tagcloud'              => true,
+				);
+				register_taxonomy( 'responsive_slider_cat', array( 'responsive_slider_l' ), $args );
 
 			}
+			add_action( 'init', 'responsive_slider_l_taxonomy', 0 );
+
+		}
 
 	}
 
 	public function homeslider_style_admin() {
 
-		function homeslider_get_featured_image($post_ID) {
-		    $post_thumbnail_id = get_post_thumbnail_id($post_ID);
-		    if ($post_thumbnail_id) {
-		        $post_thumbnail_img = wp_get_attachment_image_src($post_thumbnail_id, 'featured');
+		function homeslider_get_featured_image( $post_ID ) {
+		    $post_thumbnail_id = get_post_thumbnail_id( $post_ID );
+		    if ( $post_thumbnail_id ) {
+		        $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, 'featured' );
 		        return $post_thumbnail_img[0];
 		    }
 		}
 		// ADD NEW COLUMN
-		function homeslider_columns_head($defaults) {
-		    $defaults['featured_image'] = __('Featured Image', 'responsive_slider_l');
+		function homeslider_columns_head( $defaults ) {
+		    $defaults['featured_image'] = __( 'Featured Image', 'responsive_slider_l' );
 		    return $defaults;
 		}
 		// SHOW THE FEATURED IMAGE
-		function homeslider_columns_content($column_name, $post_ID) {
-		    if ($column_name == 'featured_image') {
-		        $post_featured_image = homeslider_get_featured_image($post_ID);
-		        if ($post_featured_image) {
+		function homeslider_columns_content( $column_name, $post_ID ) {
+		    if ( $column_name == 'featured_image' ) {
+		        $post_featured_image = homeslider_get_featured_image( $post_ID );
+		        if ( $post_featured_image ) {
 		            echo '<img src="' . $post_featured_image . '" height="100px"/>';
 		        }
 		    }
 		}
 
-		add_filter('manage_responsive_slider_l_posts_columns', 'homeslider_columns_head');
-		add_action('manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2);
+		add_filter( 'manage_responsive_slider_l_posts_columns', 'homeslider_columns_head' );
+		add_action( 'manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2 );
 
-		//add a category filter
+		// add a category filter
 		function add_category_filter() {
 				global $typenow;
-				$args=array( 'public' => true, '_builtin' => false );
-				$post_types = get_post_types($args);
-				if ( ( in_array($typenow, $post_types) ) && ($typenow=='responsive_slider_l') ) {
-					$filters = get_object_taxonomies($typenow);
-					foreach ($filters as $tax_slug) {
-						$tax_id = get_taxonomy($tax_slug);
-						if ( isset( $_GET[$tax_id->query_var] ) ) {
-							$tax_id_selected = $_GET[$tax_id->query_var];
-						} else {
-							$tax_id_selected = 'false';
-						}
-						wp_dropdown_categories(
-							array(
-								'show_option_all' => __('All '.$tax_id->label ),
-								'taxonomy' => $tax_slug,
-								'name' => $tax_id->name,
-								'orderby' => 'term_order',
-								'hierarchical' => $tax_id->hierarchical,
-								'show_count' => false,
-								'hide_empty' => true,
-								'selected' => $tax_id_selected,
-							)
-						);
+				$args = array( 'public' => true, '_builtin' => false );
+				$post_types = get_post_types( $args );
+			if ( ( in_array( $typenow, $post_types ) ) && ($typenow == 'responsive_slider_l') ) {
+				$filters = get_object_taxonomies( $typenow );
+				foreach ( $filters as $tax_slug ) {
+					$tax_id = get_taxonomy( $tax_slug );
+					if ( isset( $_GET[ $tax_id->query_var ] ) ) {
+						$tax_id_selected = $_GET[ $tax_id->query_var ];
+					} else {
+						$tax_id_selected = 'false';
 					}
+					wp_dropdown_categories(
+						array(
+							'show_option_all' => __( 'All ' . $tax_id->label ),
+							'taxonomy' => $tax_slug,
+							'name' => $tax_id->name,
+							'orderby' => 'term_order',
+							'hierarchical' => $tax_id->hierarchical,
+							'show_count' => false,
+							'hide_empty' => true,
+							'selected' => $tax_id_selected,
+						)
+					);
 				}
+			}
 		}
 
-		//adding query variable in the url
-		function add_category_restriction($query) {
+		// adding query variable in the url
+		function add_category_restriction( $query ) {
 				global $pagenow;
 				global $typenow;
-				//echo $typenow;
-				if (($pagenow=='edit.php') && ($typenow=='responsive_slider_l')) {
-					$filters = get_object_taxonomies($typenow);
-					foreach ($filters as $tax_slug) {
-						$var = &$query->query_vars[$tax_slug];
-						if ( isset($var) ) {
-							$term = get_term_by('id',$var,$tax_slug);
-								if ( is_object($term) ) {
-									$var = $term->slug;
-								} else {
-									$var = $term;
-								}
+				// echo $typenow;
+			if ( ($pagenow == 'edit.php') && ($typenow == 'responsive_slider_l') ) {
+				$filters = get_object_taxonomies( $typenow );
+				foreach ( $filters as $tax_slug ) {
+					$var = &$query->query_vars[ $tax_slug ];
+					if ( isset( $var ) ) {
+						$term = get_term_by( 'id',$var,$tax_slug );
+						if ( is_object( $term ) ) {
+							$var = $term->slug;
+						} else {
+							$var = $term;
 						}
 					}
 				}
+			}
 				return $query;
 		}
 
 		add_action( 'restrict_manage_posts', 'add_category_filter' );
-		add_filter('parse_query','add_category_restriction');
+		add_filter( 'parse_query','add_category_restriction' );
 
 	}
 
-	//register shortcode
+	// register shortcode
 	public function activate_slider_responsive_sc() {
 		function responsive_slider_lite_func( $options ) {
 		    $att = shortcode_atts( array(
@@ -413,43 +412,43 @@ class Responsive_Slider_Lite {
 						'term' => $cat,
 				);
 				$loop = new WP_Query( $args );
-				render_slider_front($loop, $title, $desc, $cat);
+				render_slider_front( $loop, $title, $desc, $cat );
 		    return;
 		}
 
-		function render_slider_front($loop, $title, $desc, $cat) {
+		function render_slider_front( $loop, $title, $desc, $cat ) {
 			?>
 			<div class="container-fluid slidermyCarousel">
 				 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 					 <div class="carousel-inner <?php echo 'rslcat-' . $cat ?>" role="listbox">
-						 <?php
-						 $c = 0;
-						 $class = '';
-						 while ( $loop->have_posts() ) : $loop->the_post(); ?>
-							 <?php
-								 $c++;
-								 if ( $c == 1 ) {
-									 $class = ' active';
-								 } else {
-									 $class = '';
-								 };
-								?>
-							 <div class="item<?php echo $class ?>">
+							<?php
+							$c = 0;
+							$class = '';
+							while ( $loop->have_posts() ) : $loop->the_post(); ?>
+									<?php
+									$c++;
+									if ( $c == 1 ) {
+										$class = ' active';
+									} else {
+										$class = '';
+									};
+									?>
+								   <div class="item<?php echo $class ?>">
 								<?php
-									$feat_image = wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) );
+									$feat_image = wp_get_attachment_url( get_post_thumbnail_id( get_the_ID() ) );
 									echo '<img src="' . $feat_image . '" alt="" width="" height="">' ;
 									echo '<div class="carousel-caption">';
-									if ($title=="true") {
-										echo '<h3>' . Get_the_title() . '</h3>';
-									} ;
-									if ($desc=="true") {
-										echo '<p>' . the_content() . '</p>';
-									} ;
+								if ( $title == 'true' ) {
+									echo '<h3>' . Get_the_title() . '</h3>';
+								} ;
+								if ( $desc == 'true' ) {
+									echo '<p>' . the_content() . '</p>';
+								} ;
 									echo '</div>';
 
 								?>
-							</div>
-						<?php endwhile; ?>
+								  </div>
+								<?php endwhile; ?>
 					</div>
 					<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
 						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>

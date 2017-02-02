@@ -44,33 +44,33 @@ class Responsive_Slider_Lite_Ordering {
 			return;
 		}
 
-		add_filter( 'views_' . $screen->id, array( __CLASS__, 'sort_by_order_link' )  );
+		add_filter( 'views_' . $screen->id, array( __CLASS__, 'sort_by_order_link' ) );
 		add_action( 'wp', array( __CLASS__, 'wp' ) );
 	}
 
 	public static function wp() {
-		if (get_post_type()=='responsive_slider_l') {
-			$orderby = get_query_var('orderby');
+		if ( get_post_type() == 'responsive_slider_l' ) {
+			$orderby = get_query_var( 'orderby' );
 			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && $orderby['menu_order'] == 'ASC' ) ) {
 				// Need to me minified later.
 				$script_name = 'admin\js\responsive-slider-lite-admin-ordering.js';
-				wp_enqueue_script( 'responsive-slider-lite-ordering', plugins_url( $script_name, __FILE__ ), array('jquery-ui-sortable'), '2.1', true );
+				wp_enqueue_script( 'responsive-slider-lite-ordering', plugins_url( $script_name, __FILE__ ), array( 'jquery-ui-sortable' ), '2.1', true );
 				wp_enqueue_style( 'responsive-slider-lite-ordering', plugins_url( 'admin/css/responsive-slider-lite-admin.min.css', __FILE__ ) );
 			}
 		}
 	}
 
 	public static function ajax_responsive_slider_lite_ordering() {
-		if ( empty( $_POST['id'] ) || ( !isset( $_POST['previd'] ) && !isset( $_POST['nextid'] ) ) ) {
-			die(-1);
+		if ( empty( $_POST['id'] ) || ( ! isset( $_POST['previd'] ) && ! isset( $_POST['nextid'] ) ) ) {
+			die( -1 );
 		}
 
 		if ( ! $post = get_post( $_POST['id'] ) ) {
-			die(-1);
+			die( -1 );
 		}
 
 		if ( ! self::check_edit_others_caps( $post->post_type ) ) {
-			die(-1);
+			die( -1 );
 		}
 
 		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
@@ -132,7 +132,7 @@ class Responsive_Slider_Lite_Ordering {
 		$siblings = new WP_Query( $siblings_query );
 		remove_action( 'pre_post_update', 'wp_save_post_revision' );
 
-		foreach( $siblings->posts as $sibling ) :
+		foreach ( $siblings->posts as $sibling ) :
 
 			if ( $sibling->ID === $post->ID ) {
 				continue;
@@ -145,7 +145,7 @@ class Responsive_Slider_Lite_Ordering {
 					'post_parent'	=> $parent_id,
 				));
 				$ancestors = get_post_ancestors( $post->ID );
-				$new_pos[$post->ID] = array(
+				$new_pos[ $post->ID ] = array(
 					'menu_order'	=> $start,
 					'post_parent'	=> $parent_id,
 					'depth'			=> count( $ancestors ),
@@ -153,7 +153,7 @@ class Responsive_Slider_Lite_Ordering {
 				$start++;
 			}
 
-			if ( isset( $new_pos[$post->ID] ) && $sibling->menu_order >= $start ) {
+			if ( isset( $new_pos[ $post->ID ] ) && $sibling->menu_order >= $start ) {
 				$return_data->next = false;
 				break;
 			}
@@ -164,26 +164,27 @@ class Responsive_Slider_Lite_Ordering {
 					'menu_order'	=> $start,
 				));
 			}
-			$new_pos[$sibling->ID] = $start;
+			$new_pos[ $sibling->ID ] = $start;
 			$start++;
 
-			if ( !$nextid && $previd == $sibling->ID ) {
+			if ( ! $nextid && $previd == $sibling->ID ) {
 				wp_update_post(array(
 					'ID' 			=> $post->ID,
 					'menu_order' 	=> $start,
-					'post_parent' 	=> $parent_id
+					'post_parent' 	=> $parent_id,
 				));
 				$ancestors = get_post_ancestors( $post->ID );
-				$new_pos[$post->ID] = array(
+				$new_pos[ $post->ID ] = array(
 					'menu_order'	=> $start,
 					'post_parent' 	=> $parent_id,
-					'depth' 		=> count($ancestors) );
+					'depth' 		=> count( $ancestors ),
+				);,
 				$start++;
 			}
 
 		endforeach;
 
-		if ( !isset( $return_data->next ) && $siblings->max_num_pages > 1 ) {
+		if ( ! isset( $return_data->next ) && $siblings->max_num_pages > 1 ) {
 			$return_data->next = array(
 				'id' 		=> $post->ID,
 				'previd' 	=> $previd,
@@ -219,13 +220,13 @@ class Responsive_Slider_Lite_Ordering {
 	}
 
 	public static function sort_by_order_link( $views ) {
-		$class = ( get_query_var('orderby') == 'menu_order title' ) ? 'current' : '';
+		$class = ( get_query_var( 'orderby' ) == 'menu_order title' ) ? 'current' : '';
 		$query_string = esc_url( remove_query_arg( array( 'orderby', 'order' ) ) );
 		if ( ! is_post_type_hierarchical( get_post_type() ) ) {
 			$query_string = add_query_arg( 'orderby', 'menu_order title', $query_string );
 			$query_string = add_query_arg( 'order', 'asc', $query_string );
 		}
-		$views['byorder'] = sprintf('<a href="%s" class="%s">%s</a>', $query_string, $class, __("Sort by Order", 'responsive_slider_lite_ordering'));
+		$views['byorder'] = sprintf( '<a href="%s" class="%s">%s</a>', $query_string, $class, __( 'Sort by Order', 'responsive_slider_lite_ordering' ) );
 
 		return $views;
 	}

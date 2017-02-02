@@ -44,8 +44,8 @@ class Responsive_Slider_Lite_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -77,12 +77,12 @@ class Responsive_Slider_Lite_Public {
 
 		global $wp_styles;
 		if ( $wp_styles instanceof WP_Styles ) {
-			foreach( $wp_styles->queue as $handle ) {
-				$obj = $wp_styles->registered[$handle];
-					if (strpos($obj->src, 'bootstrap') == false) {
-					    		wp_enqueue_style( $this->plugin_name . 'bootstrapcss', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/css/bootstrap.min.css', array(), $this->version, 'all' );
-									wp_enqueue_script( $this->plugin_name . 'bootstrapjs', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
-					}
+			foreach ( $wp_styles->queue as $handle ) {
+				$obj = $wp_styles->registered[ $handle ];
+				if ( strpos( $obj->src, 'bootstrap' ) == false ) {
+						wp_enqueue_style( $this->plugin_name . 'bootstrapcss', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/css/bootstrap.min.css', array(), $this->version, 'all' );
+							wp_enqueue_script( $this->plugin_name . 'bootstrapjs', plugin_dir_url( __FILE__ ) . '/bootstrap/bootstrap-3.3.6-dist/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
+				}
 			}
 		}
 	}
