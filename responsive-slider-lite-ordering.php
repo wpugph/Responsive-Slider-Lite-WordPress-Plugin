@@ -178,7 +178,7 @@ class Responsive_Slider_Lite_Ordering {
 					'menu_order'	=> $start,
 					'post_parent' 	=> $parent_id,
 					'depth' 		=> count( $ancestors ),
-				);,
+				);
 				$start++;
 			}
 
