@@ -1,37 +1,59 @@
 <?php
+/**
+ * Contains the drop and drag sorting feature in the sliders page.
+ *
+ * @package    Responsive_Slider_Lite
+ */
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+/**
+ * Contains the drop and drag sorting feature in the sliders page.
+ *
+ * @package    Responsive_Slider_Lite/ordering
+ */
 class Responsive_Slider_Lite_Ordering {
 
+	/**
+	 * Makes the plugin single instance.
+	 */
 	public static function get_instance() {
-
 		static $instance = null;
-
 		if ( null === $instance ) {
 			$instance = new self();
 			self::_add_actions();
 		}
-
 		return $instance;
 	}
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 
 	}
 
+	/**
+	 * Add the necessary actions.
+	 */
 	public static function _add_actions() {
 		add_action( 'load-edit.php', array( __CLASS__, 'load_edit_screen' ) );
 		add_action( 'wp_ajax_responsive_slider_lite_ordering', array( __CLASS__, 'ajax_responsive_slider_lite_ordering' ) );
 		add_action( 'plugins_loaded', array( __CLASS__, 'load_textdomain' ) );
 	}
 
+	/**
+	 * Translatable.
+	 */
 	public static function load_textdomain() {
 		load_plugin_textdomain( 'responsive_slider_lite_ordering', false, dirname( plugin_basename( __FILE__ ) ) . '/localization/' );
 	}
 
+	/**
+	 * Loads the edit screen.
+	 */
 	public static function load_edit_screen() {
 		$screen = get_current_screen();
 		$post_type = $screen->post_type;
@@ -48,11 +70,14 @@ class Responsive_Slider_Lite_Ordering {
 		add_action( 'wp', array( __CLASS__, 'wp' ) );
 	}
 
+	/**
+	 * Gats all the slider post types.
+	 */
 	public static function wp() {
-		if ( get_post_type() == 'responsive_slider_l' ) {
+		if ( get_post_type() === 'responsive_slider_l' ) {
 			$orderby = get_query_var( 'orderby' );
-			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && $orderby['menu_order'] == 'ASC' ) ) {
-				// Need to me minified later.
+			if ( ( is_string( $orderby ) && 0 === strpos( $orderby, 'menu_order' ) ) || ( isset( $orderby['menu_order'] ) && $orderby['menu_order'] === 'ASC' ) ) {
+				// TODO:Need to me minified later.
 				$script_name = 'admin\js\responsive-slider-lite-admin-ordering.js';
 				wp_enqueue_script( 'responsive-slider-lite-ordering', plugins_url( $script_name, __FILE__ ), array( 'jquery-ui-sortable' ), '2.1', true );
 				wp_enqueue_style( 'responsive-slider-lite-ordering', plugins_url( 'admin/css/responsive-slider-lite-admin.min.css', __FILE__ ) );
@@ -60,7 +85,11 @@ class Responsive_Slider_Lite_Ordering {
 		}
 	}
 
+	/**
+	 * Ajax loader.
+	 */
 	public static function ajax_responsive_slider_lite_ordering() {
+		// @codingStandardsIgnoreStart
 		if ( empty( $_POST['id'] ) || ( ! isset( $_POST['previd'] ) && ! isset( $_POST['nextid'] ) ) ) {
 			die( -1 );
 		}
@@ -73,16 +102,13 @@ class Responsive_Slider_Lite_Ordering {
 			die( -1 );
 		}
 
-		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
-			error_reporting( 0 );
-		}
-
 		global $wp_version;
 
 		$previd = empty( $_POST['previd'] ) ? false : (int) $_POST['previd'];
 		$nextid = empty( $_POST['nextid'] ) ? false : (int) $_POST['nextid'];
 		$start = empty( $_POST['start'] ) ? 1 : (int) $_POST['start'];
 		$excluded = empty( $_POST['excluded'] ) ? array( $post->ID ) : array_filter( (array) $_POST['excluded'], 'intval' );
+		// @codingStandardsIgnoreEnd
 
 		$new_pos = array();
 		$return_data = new stdClass;
@@ -91,12 +117,12 @@ class Responsive_Slider_Lite_Ordering {
 
 		$parent_id = $post->post_parent;
 		$next_post_parent = $nextid ? wp_get_post_parent_id( $nextid ) : false;
-		if ( $previd == $next_post_parent ) {
+		if ( $previd === $next_post_parent ) {
 			$parent_id = $next_post_parent;
 		} elseif ( $next_post_parent !== $parent_id ) {
 			$prev_post_parent = $previd ? wp_get_post_parent_id( $previd ) : false;
 			if ( $prev_post_parent !== $parent_id ) {
-				$parent_id = ( $prev_post_parent !== false ) ? $prev_post_parent : $next_post_parent;
+				$parent_id = ( false !== $prev_post_parent ) ? $prev_post_parent : $next_post_parent;
 			}
 		}
 		if ( $next_post_parent !== $parent_id ) {
@@ -158,7 +184,7 @@ class Responsive_Slider_Lite_Ordering {
 				break;
 			}
 
-			if ( $sibling->menu_order != $start ) {
+			if ( $sibling->menu_order !== $start ) {
 				wp_update_post(array(
 					'ID' 			=> $sibling->ID,
 					'menu_order'	=> $start,
@@ -167,7 +193,7 @@ class Responsive_Slider_Lite_Ordering {
 			$new_pos[ $sibling->ID ] = $start;
 			$start++;
 
-			if ( ! $nextid && $previd == $sibling->ID ) {
+			if ( ! $nextid && $previd === $sibling->ID ) {
 				wp_update_post(array(
 					'ID' 			=> $post->ID,
 					'menu_order' 	=> $start,
@@ -199,6 +225,8 @@ class Responsive_Slider_Lite_Ordering {
 		do_action( 'responsive_slider_lite_ordering_ordered_posts', $post, $new_pos );
 
 		if ( ! $return_data->next ) {
+			// optimize query later.
+			// @codingStandardsIgnoreStart
 			$children = get_posts(array(
 				'numberposts'				=> 1,
 				'post_type' 				=> $post->post_type,
@@ -208,6 +236,7 @@ class Responsive_Slider_Lite_Ordering {
 				'update_post_term_cache'	=> false,
 				'update_post_meta_cache'	=> false,
 			));
+			// @codingStandardsIgnoreEnd
 
 			if ( ! empty( $children ) ) {
 				die( 'children' );
@@ -216,11 +245,16 @@ class Responsive_Slider_Lite_Ordering {
 
 		$return_data->new_pos = $new_pos;
 
-		die( json_encode( $return_data ) );
+		die( wp_json_encode( $return_data ) );
 	}
 
+	/**
+	 * Sort by order.
+	 *
+	 * @param string $views The views.
+	 */
 	public static function sort_by_order_link( $views ) {
-		$class = ( get_query_var( 'orderby' ) == 'menu_order title' ) ? 'current' : '';
+		$class = ( get_query_var( 'orderby' ) === 'menu_order title' ) ? 'current' : '';
 		$query_string = esc_url( remove_query_arg( array( 'orderby', 'order' ) ) );
 		if ( ! is_post_type_hierarchical( get_post_type() ) ) {
 			$query_string = add_query_arg( 'orderby', 'menu_order title', $query_string );
@@ -231,6 +265,11 @@ class Responsive_Slider_Lite_Ordering {
 		return $views;
 	}
 
+	/**
+	 * Can only be edited by certain caps
+	 *
+	 * @param string $post_type post type.
+	 */
 	private static function check_edit_others_caps( $post_type ) {
 		$post_type_object = get_post_type_object( $post_type );
 		$edit_others_cap = empty( $post_type_object ) ? 'edit_others_' . $post_type . 's' : $post_type_object->cap->edit_others_posts;

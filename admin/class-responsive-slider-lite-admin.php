@@ -1,9 +1,8 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://carlalberto.ml/
+ * @link       https://carl.alber2.com/
  * @since      1.0.0
  *
  * @package    Responsive_Slider_Lite
@@ -18,7 +17,7 @@
  *
  * @package    Responsive_Slider_Lite
  * @subpackage Responsive_Slider_Lite/admin
- * @author     Carl Alberto <cgalbert01@gmail.com>
+ * @author     Carl Alberto <carl@alber2.com>
  */
 class Responsive_Slider_Lite_Admin {
 
