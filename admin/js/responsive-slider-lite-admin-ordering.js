@@ -17,6 +17,7 @@ var prevpostid;
 var prevpost;
 var nextpostid;
 var nextpost;
+var tableRows;
 
 postTableToOrder.sortable({
 	items: '> tr',
@@ -28,7 +29,7 @@ postTableToOrder.sortable({
 	opacity: 0.8,
 	tolerance: 'pointer',
 	start: function( e, ui ) {
-		if ( typeof( inlineEditPost ) !== 'undefined' ) {
+		if ( 'undefined' !== typeof( inlineEditPost ) ) {
 			inlineEditPost.revert();
 		}
 		ui.placeholder.height( ui.item.height() );
@@ -42,15 +43,14 @@ postTableToOrder.sortable({
 		}
 		return ui;
 	},
-	stop: function(e, ui) {
-		// remove fixed widths
-		ui.item.children().css( 'width','' );
+	stop: function( e, ui ) {
+		ui.item.children().css( 'width', '' );
 	},
-	update: function(e, ui) {
+	update: function( e, ui ) {
 		postTableToOrder.sortable( 'disable' ).addClass( 'spo-updating' );
 		ui.item.addClass( 'spo-updating-row' );
 
-		postid = ui.item[0].id.substr( 5 ); // post id
+		postid = ui.item[0].id.substr( 5 );
 
 		prevpostid = false;
 		prevpost = ui.item.prev();
@@ -71,7 +71,7 @@ postTableToOrder.sortable({
 			nextid: nextpostid
 		}, updateResponsiveSliderLiteOrderingCallback );
 
-		var tableRows = document.querySelectorAll( 'tr.iedit' ),
+		tableRows = document.querySelectorAll( 'tr.iedit' ),
 			tableRowCount = tableRows.length;
 		while ( tableRowCount-- ) {
 			if ( 0 === tableRowCount % 2 ) {
@@ -94,9 +94,10 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 	var inlineReferencePosition;
 	var domMenuOrder;
 	var postTitle;
-	var dom_postTitle;
+	var domPostTitle;
 	var dashes;
 	var domRowTitle;
+	var domOfPostParent;
 
 	// Make sure script only fires on children.
 	if ( 'children' === response ) {
@@ -120,15 +121,15 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
 				}
 
-				var domOfPostParent = inlineKey.querySelector( '.post_parent' );
+				domOfPostParent = inlineKey.querySelector( '.post_parent' );
 				if ( null !== domOfPostParent ) {
 					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
 				}
 
 				postTitle = null;
-				dom_postTitle = inlineReferencePosition.querySelector( '.postTitle' );
-				if ( null !== dom_postTitle ) {
-					postTitle = dom_postTitle.innerHTML;
+				domPostTitle = inlineReferencePosition.querySelector( '.postTitle' );
+				if ( null !== domPostTitle ) {
+					postTitle = domPostTitle.innerHTML;
 				}
 
 				dashes = 0;
