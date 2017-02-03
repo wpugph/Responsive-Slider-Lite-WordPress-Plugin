@@ -6,77 +6,10 @@
  *
  * @package    Responsive_Slider_Lite
  */
-function updateResponsiveSliderLiteOrderingCallback( response ) {
-
-	// Load temporary holder for json response.
-	var changes = jQuery.parseJSON( response );
-	var referencePosition;
-
-	// Make sure script only fires on children.
-	if ( 'children' === response ) {
-		window.location.reload();
-		return;
-	}
-
-	var updatedPosition = changes.updatedPosition;
-	for ( referencePosition in updatedPosition ) {
-		if ( 'next' === referencePosition ) {
-			continue;
-		}
-
-		var inlineKey = document.getElementById( 'inline_' + referencePosition );
-
-		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
-			var inlineReferencePosition;
-			var domMenuOrder = inlineReferencePosition.querySelector( '.menu_order' );
-
-			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
-				if ( null !== domMenuOrder ) {
-					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
-				}
-
-				var domOfPostParent = inlineKey.querySelector( '.post_parent' );
-				if ( null !== domOfPostParent ) {
-					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
-				}
-
-				var postTitle = null;
-				var dom_postTitle = inlineReferencePosition.querySelector( '.postTitle' );
-				if ( null !== dom_postTitle ) {
-					postTitle = dom_postTitle.innerHTML;
-				}
-
-				var dashes = 0;
-				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
-					postTitle = '&mdash; ' + postTitle;
-					dashes++;
-				}
-				var domRowTitle = inlineKey.parentNode.querySelector( '.row-title' );
-				if ( null !== domRowTitle && null !== postTitle ) {
-					domRowTitle.innerHTML = postTitle;
-				}
-			} else if ( null !== domMenuOrder ) {
-				domMenuOrder.innerHTML = updatedPosition[referencePosition];
-			}
-		}
-	}
-
-	if ( changes.next ) {
-		jQuery.post( ajaxurl, { // jshint ignore:line
-			action: 'responsive_slider_lite_ordering',
-			id: changes.next['.id'],
-			previd: changes.next['.previd'],
-			nextid: changes.next['.nextid'],
-			start: changes.next['.start'],
-			excluded: changes.next['.excluded']
-		}, updateResponsiveSliderLiteOrderingCallback );
-	} else {
-		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
-		postTableToOrder.removeClass( 'spo-updating' ).sortable( 'enable' );
-	}
-}
 
 var postTableToOrder = jQuery( '.wp-list-table tbody' );
+var inlineEditPost;
+
 postTableToOrder.sortable({
 	items: '> tr',
 	cursor: 'move',
@@ -87,7 +20,6 @@ postTableToOrder.sortable({
 	opacity: 0.8,
 	tolerance: 'pointer',
 	start: function(e, ui){
-		var inlineEditPost;
 		if ( typeof(inlineEditPost) !== 'undefined' ) {
 			inlineEditPost.revert();
 		}
@@ -142,3 +74,80 @@ postTableToOrder.sortable({
 
 	}
 });
+
+function updateResponsiveSliderLiteOrderingCallback( response ) {
+
+	// Load temporary holder for json response.
+	var changes = jQuery.parseJSON( response );
+	var referencePosition;
+	var updatedPosition;
+	var inlineKey;
+	var inlineReferencePosition;
+	var domMenuOrder
+	var postTitle;
+	var dom_postTitle;
+	var dashes;
+	var domRowTitle;
+
+	// Make sure script only fires on children.
+	if ( 'children' === response ) {
+		window.location.reload();
+		return;
+	}
+
+	updatedPosition = changes.updatedPosition;
+	for ( referencePosition in updatedPosition ) {
+		if ( 'next' === referencePosition ) {
+			continue;
+		}
+
+		inlineKey = document.getElementById( 'inline_' + referencePosition );
+
+		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
+			domMenuOrder = inlineReferencePosition.querySelector( '.menu_order' );
+
+			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
+				if ( null !== domMenuOrder ) {
+					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
+				}
+
+				var domOfPostParent = inlineKey.querySelector( '.post_parent' );
+				if ( null !== domOfPostParent ) {
+					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
+				}
+
+				postTitle = null;
+				dom_postTitle = inlineReferencePosition.querySelector( '.postTitle' );
+				if ( null !== dom_postTitle ) {
+					postTitle = dom_postTitle.innerHTML;
+				}
+
+				dashes = 0;
+				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
+					postTitle = '&mdash; ' + postTitle;
+					dashes++;
+				}
+				domRowTitle = inlineKey.parentNode.querySelector( '.row-title' );
+				if ( null !== domRowTitle && null !== postTitle ) {
+					domRowTitle.innerHTML = postTitle;
+				}
+			} else if ( null !== domMenuOrder ) {
+				domMenuOrder.innerHTML = updatedPosition[referencePosition];
+			}
+		}
+	}
+
+	if ( changes.next ) {
+		jQuery.post( ajaxurl, { // jshint ignore:line
+			action: 'responsive_slider_lite_ordering',
+			id: changes.next['.id'],
+			previd: changes.next['.previd'],
+			nextid: changes.next['.nextid'],
+			start: changes.next['.start'],
+			excluded: changes.next['.excluded']
+		}, updateResponsiveSliderLiteOrderingCallback );
+	} else {
+		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
+		postTableToOrder.removeClass( 'spo-updating' ).sortable( 'enable' );
+	}
+}
