@@ -1,3 +1,4 @@
 js/**.min.js
 admin/js/**.min.js
 public/bootstrap/*
+admin/js/responsive-slider-lite-admin-ordering.min.js
