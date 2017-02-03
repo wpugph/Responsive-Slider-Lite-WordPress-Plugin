@@ -9,4 +9,5 @@
  *
  * @package    Responsive_Slider_Lite
  * @subpackage Responsive_Slider_Lite/public/partials
+ * @codingStandardsIgnoreFile
  */

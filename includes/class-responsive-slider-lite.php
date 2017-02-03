@@ -1,12 +1,11 @@
 <?php
-
 /**
- * The file that defines the core plugin class
+ * The file that defines the core plugin class.
  *
- * A class definition that includes attributes and functions used across both the
+ * A class definition that includes attributes and functions used across both the.
  * public-facing side of the site and the admin area.
  *
- * @link       http://carlalberto.ml/
+ * @link       https://carl.alber2.com/
  * @since      1.0.0
  *
  * @package    Responsive_Slider_Lite
@@ -25,7 +24,7 @@
  * @since      1.0.0
  * @package    Responsive_Slider_Lite
  * @subpackage Responsive_Slider_Lite/includes
- * @author     Carl Alberto <cgalbert01@gmail.com>
+ * @author     Carl Alberto <carl@alber2.com>
  */
 class Responsive_Slider_Lite {
 
@@ -212,10 +211,14 @@ class Responsive_Slider_Lite {
 		return $this->version;
 	}
 
-
+	/**
+	 * Register CPT for home sliders.
+	 */
 	public function register_homeslider() {
 		if ( ! function_exists( 'homeslider_post_type' ) ) {
-			// Register Slider CPT
+			/**
+			 * Register Custom Taxonomy.
+			 */
 			function homeslider_post_type() {
 				$labels = array(
 					'name'                  => _x( 'Slider Lite', 'Post Type General Name', 'responsive_slider_lite' ),
@@ -268,7 +271,9 @@ class Responsive_Slider_Lite {
 			}
 			add_action( 'init', 'homeslider_post_type', 0 );
 
-			// Register Custom Taxonomy
+			/**
+			 * Register Custom Taxonomy.
+			 */
 			function responsive_slider_l_taxonomy() {
 
 				$labels = array(
@@ -310,27 +315,45 @@ class Responsive_Slider_Lite {
 		}
 
 	}
-
+	/**
+	 * Admin view.
+	 */
 	public function homeslider_style_admin() {
 
-		function homeslider_get_featured_image( $post_ID ) {
-		    $post_thumbnail_id = get_post_thumbnail_id( $post_ID );
-		    if ( $post_thumbnail_id ) {
+		/**
+		 * Register Custom Taxonomy.
+		 *
+		 * @param int $post_id The post id that we need.
+		 */
+		function homeslider_get_featured_image( $post_id ) {
+			$post_thumbnail_id = get_post_thumbnail_id( $post_id );
+			if ( $post_thumbnail_id ) {
 		        $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, 'featured' );
 		        return $post_thumbnail_img[0];
 		    }
 		}
-		// ADD NEW COLUMN
+
+		/**
+		 * Register column heads.
+		 *
+		 * @param int $defaults The default headers.
+		 */
 		function homeslider_columns_head( $defaults ) {
 		    $defaults['featured_image'] = __( 'Featured Image', 'responsive_slider_l' );
 		    return $defaults;
 		}
-		// SHOW THE FEATURED IMAGE
-		function homeslider_columns_content( $column_name, $post_ID ) {
-		    if ( $column_name == 'featured_image' ) {
-		        $post_featured_image = homeslider_get_featured_image( $post_ID );
+
+		/**
+		 * Register column heads.
+		 *
+		 * @param string $column_name The default headers.
+		 * @param int    $post_id ID that we are looking for.
+		 */
+		function homeslider_columns_content( $column_name, $post_id ) {
+		    if ( 'featured_image' === $column_name ) {
+		        $post_featured_image = homeslider_get_featured_image( $post_id );
 		        if ( $post_featured_image ) {
-		            echo '<img src="' . $post_featured_image . '" height="100px"/>';
+		            echo '<img src="' . $post_featured_image . '" height="100px"/>'; // @codingStandardsIgnoreLine
 		        }
 		    }
 		}
@@ -338,17 +361,21 @@ class Responsive_Slider_Lite {
 		add_filter( 'manage_responsive_slider_l_posts_columns', 'homeslider_columns_head' );
 		add_action( 'manage_responsive_slider_l_posts_custom_column', 'homeslider_columns_content', 10, 2 );
 
-		// add a category filter
+		/**
+		 * Register filters.
+		 */
 		function add_category_filter() {
 				global $typenow;
 				$args = array( 'public' => true, '_builtin' => false );
 				$post_types = get_post_types( $args );
-			if ( ( in_array( $typenow, $post_types ) ) && ($typenow == 'responsive_slider_l') ) {
+			if ( ( in_array( $typenow, $post_types, true ) ) && ( 'responsive_slider_l' === $typenow ) ) {
 				$filters = get_object_taxonomies( $typenow );
 				foreach ( $filters as $tax_slug ) {
 					$tax_id = get_taxonomy( $tax_slug );
+					// @codingStandardsIgnoreStart
 					if ( isset( $_GET[ $tax_id->query_var ] ) ) {
 						$tax_id_selected = $_GET[ $tax_id->query_var ];
+					// @codingStandardsIgnoreEnd
 					} else {
 						$tax_id_selected = 'false';
 					}
@@ -368,7 +395,11 @@ class Responsive_Slider_Lite {
 			}
 		}
 
-		// adding query variable in the url
+		/**
+		 * Register Custom Taxonomy.
+		 *
+		 * @param int $post_id The post id that we need.
+		 */
 		function add_category_restriction( $query ) {
 				global $pagenow;
 				global $typenow;
@@ -465,7 +496,4 @@ class Responsive_Slider_Lite {
 		}
 		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
 	}
-
-
-
 }

@@ -95,7 +95,7 @@ class Responsive_Slider_Lite_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/responsive-slider-lite-admin.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/responsive-slider-lite-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 

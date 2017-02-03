@@ -6,6 +6,16 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 	// Load temporary holder for json response.
 	var changes = jQuery.parseJSON( response );
 	var referencePosition;
+	var updatedPosition;
+	var inlineKey;
+	var inline_referencePosition;
+	var domMenuOrder;
+	var postTitle = null;
+	var domOfPostParent;
+	var dom_postTitle;
+	var dashes = 0;
+	var domRowTitle;
+	varv post_table_to_order;
 
 	// Make sure script only fires on children.
 	if ( 'children' === response ) {
@@ -13,45 +23,43 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 		return;
 	}
 
-	var updatedPosition = changes.updatedPosition;
+	updatedPosition = changes.updatedPosition;
 	for (  referencePosition in updatedPosition ) {
 		if ( 'next' === referencePosition ) {
 			continue;
 		}
 
-		var inlineKey = document.getElementById( 'inline_' + referencePosition );
+		inlineKey = document.getElementById( 'inline_' + referencePosition );
 
 		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
-			var inline_referencePosition;
-			var dom_menu_order = inline_referencePosition.querySelector( '.menu_order' );
+
+			domMenuOrder = inline_referencePosition.querySelector( '.menu_order' );
 
 			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
-				if ( null !== dom_menu_order ) {
-					dom_menu_order.innerHTML = updatedPosition[referencePosition]['.menu_order'];
+				if ( null !== domMenuOrder ) {
+					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
 				}
 
-				var dom_of_post_parent = inlineKey.querySelector( '.post_parent' );
-				if ( null !== dom_of_post_parent ) {
-					dom_of_post_parent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
+				domOfPostParent = inlineKey.querySelector( '.post_parent' );
+				if ( null !== domOfPostParent ) {
+					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
 				}
 
-				var post_title = null;
-				var dom_post_title = inline_referencePosition.querySelector( '.post_title' );
-				if ( null !== dom_post_title ) {
-					post_title = dom_post_title.innerHTML;
+				dom_postTitle = inline_referencePosition.querySelector( '.postTitle' );
+				if ( null !== dom_postTitle ) {
+					postTitle = dom_postTitle.innerHTML;
 				}
 
-				var dashes = 0;
 				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
-					post_title = '&mdash; ' + post_title;
+					postTitle = '&mdash; ' + postTitle;
 					dashes++;
 				}
-				var dom_row_title = inlineKey.parentNode.querySelector( '.row-title' );
-				if ( null !== dom_row_title && null !== post_title ) {
-					dom_row_title.innerHTML = post_title;
+				domRowTitle = inlineKey.parentNode.querySelector( '.row-title' );
+				if ( null !== domRowTitle && null !== postTitle ) {
+					domRowTitle.innerHTML = postTitle;
 				}
-			} else if ( null !== dom_menu_order ) {
-				dom_menu_order.innerHTML = updatedPosition[referencePosition];
+			} else if ( null !== domMenuOrder ) {
+				domMenuOrder.innerHTML = updatedPosition[referencePosition];
 			}
 		}
 	}
@@ -71,7 +79,7 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 	}
 }
 
-var post_table_to_order = jQuery( '.wp-list-table tbody' );
+post_table_to_order = jQuery( '.wp-list-table tbody' );
 post_table_to_order.sortable({
 	items: '> tr',
 	cursor: 'move',
