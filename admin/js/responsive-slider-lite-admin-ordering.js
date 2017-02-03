@@ -12,6 +12,11 @@ var inlineEditPost;
 var children;
 var i;
 var selector;
+var postid;
+var prevpostid;
+var prevpost;
+var nextpostid;
+var nextpost;
 
 postTableToOrder.sortable({
 	items: '> tr',
@@ -45,16 +50,16 @@ postTableToOrder.sortable({
 		postTableToOrder.sortable( 'disable' ).addClass( 'spo-updating' );
 		ui.item.addClass( 'spo-updating-row' );
 
-		var postid = ui.item[0].id.substr( 5 ); // post id
+		postid = ui.item[0].id.substr( 5 ); // post id
 
-		var prevpostid = false;
-		var prevpost = ui.item.prev();
+		prevpostid = false;
+		prevpost = ui.item.prev();
 		if ( prevpost.length > 0 ) {
 			prevpostid = prevpost.attr( 'id' ).substr( 5 );
 		}
 
-		var nextpostid = false;
-		var nextpost = ui.item.next();
+		nextpostid = false;
+		nextpost = ui.item.next();
 		if ( nextpost.length > 0 ) {
 			nextpostid = nextpost.attr( 'id' ).substr( 5 );
 		}
