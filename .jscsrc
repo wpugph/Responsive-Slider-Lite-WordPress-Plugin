@@ -3,6 +3,7 @@
     "fileExtensions": [ ".js" ],
     "excludeFiles": [
     	"js/**.min.js",
-		"admin/js/**.min.js"
+		"admin/js/**.min.js",
+		"public/bootstrap/*"
     ]
 }

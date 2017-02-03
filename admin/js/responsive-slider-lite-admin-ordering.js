@@ -18,6 +18,7 @@ var prevpost;
 var nextpostid;
 var nextpost;
 var tableRows;
+var tableRowCount;
 
 postTableToOrder.sortable({
 	items: '> tr',
@@ -71,8 +72,8 @@ postTableToOrder.sortable({
 			nextid: nextpostid
 		}, updateResponsiveSliderLiteOrderingCallback );
 
-		tableRows = document.querySelectorAll( 'tr.iedit' ),
-			tableRowCount = tableRows.length;
+		tableRows = document.querySelectorAll( 'tr.iedit' );
+		tableRowCount = tableRows.length;
 		while ( tableRowCount-- ) {
 			if ( 0 === tableRowCount % 2 ) {
 				jQuery( tableRows[tableRowCount] ).addClass( 'alternate' );
