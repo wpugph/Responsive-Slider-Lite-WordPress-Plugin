@@ -6,10 +6,11 @@
  *
  * @package    Responsive_Slider_Lite
  */
-function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
+function updateResponsiveSliderLiteOrderingCallback( response ) {
 
 	// Load temporary holder for json response.
 	var changes = jQuery.parseJSON( response );
+	var referencePosition;
 
 	// Make sure script only fires on children.
 	if ( 'children' === response ) {
@@ -17,45 +18,45 @@ function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 		return;
 	}
 
-	var updated_Position = changes.updated_Position;
-	for ( var reference_position in updated_Position ) {
-		if ( 'next' === reference_position ) {
+	var updatedPosition = changes.updatedPosition;
+	for ( referencePosition in updatedPosition ) {
+		if ( 'next' === referencePosition ) {
 			continue;
 		}
 
-		var inline_key = document.getElementById( 'inline_' + reference_position );
+		var inlineKey = document.getElementById( 'inline_' + referencePosition );
 
-		if ( null !== inline_key && updated_Position.hasOwnProperty( reference_position ) ) {
-			var inline_reference_position;
-			var dom_menu_order = inline_reference_position.querySelector( '.menu_order' );
+		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
+			var inlineReferencePosition;
+			var domMenuOrder = inlineReferencePosition.querySelector( '.menu_order' );
 
-			if ( undefined !== updated_Position[reference_position]['.menu_order'] ) {
-				if ( null !== dom_menu_order ) {
-					dom_menu_order.innerHTML = updated_Position[reference_position]['.menu_order'];
+			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
+				if ( null !== domMenuOrder ) {
+					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
 				}
 
-				var dom_of_post_parent = inline_key.querySelector( '.post_parent' );
-				if ( null !== dom_of_post_parent ) {
-					dom_of_post_parent.innerHTML = updated_Position[reference_position]['.post_parent'];
+				var domOfPostParent = inlineKey.querySelector( '.post_parent' );
+				if ( null !== domOfPostParent ) {
+					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
 				}
 
-				var post_title = null;
-				var dom_post_title = inline_reference_position.querySelector( '.post_title' );
-				if ( null !== dom_post_title ) {
-					post_title = dom_post_title.innerHTML;
+				var postTitle = null;
+				var dom_postTitle = inlineReferencePosition.querySelector( '.postTitle' );
+				if ( null !== dom_postTitle ) {
+					postTitle = dom_postTitle.innerHTML;
 				}
 
 				var dashes = 0;
-				while ( dashes < updated_Position[reference_position]['.depth'] ) {
-					post_title = '&mdash; ' + post_title;
+				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
+					postTitle = '&mdash; ' + postTitle;
 					dashes++;
 				}
-				var dom_row_title = inline_key.parentNode.querySelector( '.row-title' );
-				if ( null !== dom_row_title && null !== post_title ) {
-					dom_row_title.innerHTML = post_title;
+				var domRowTitle = inlineKey.parentNode.querySelector( '.row-title' );
+				if ( null !== domRowTitle && null !== postTitle ) {
+					domRowTitle.innerHTML = postTitle;
 				}
-			} else if ( null !== dom_menu_order ) {
-				dom_menu_order.innerHTML = updated_Position[reference_position];
+			} else if ( null !== domMenuOrder ) {
+				domMenuOrder.innerHTML = updatedPosition[referencePosition];
 			}
 		}
 	}
@@ -68,15 +69,15 @@ function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 			nextid: changes.next['.nextid'],
 			start: changes.next['.start'],
 			excluded: changes.next['.excluded']
-		}, update_Responsive_Slider_Lite_Ordering_Callback );
+		}, updateResponsiveSliderLiteOrderingCallback );
 	} else {
 		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
-		post_table_to_order.removeClass( 'spo-updating' ).sortable( 'enable' );
+		postTableToOrder.removeClass( 'spo-updating' ).sortable( 'enable' );
 	}
 }
 
-var post_table_to_order = jQuery( '.wp-list-table tbody' );
-post_table_to_order.sortable({
+var postTableToOrder = jQuery( '.wp-list-table tbody' );
+postTableToOrder.sortable({
 	items: '> tr',
 	cursor: 'move',
 	axis: 'y',
@@ -105,7 +106,7 @@ post_table_to_order.sortable({
 		ui.item.children().css( 'width','' );
 	},
 	update: function(e, ui) {
-		post_table_to_order.sortable( 'disable' ).addClass( 'spo-updating' );
+		postTableToOrder.sortable( 'disable' ).addClass( 'spo-updating' );
 		ui.item.addClass( 'spo-updating-row' );
 
 		var postid = ui.item[0].id.substr( 5 ); // post id
@@ -127,15 +128,15 @@ post_table_to_order.sortable({
 			id: postid,
 			previd: prevpostid,
 			nextid: nextpostid
-		}, update_Responsive_Slider_Lite_Ordering_Callback );
+		}, updateResponsiveSliderLiteOrderingCallback );
 
-		var table_rows = document.querySelectorAll( 'tr.iedit' ),
-			table_row_count = table_rows.length;
-		while ( table_row_count-- ) {
-			if ( 0 === table_row_count % 2 ) {
-				jQuery( table_rows[table_row_count] ).addClass( 'alternate' );
+		var tableRows = document.querySelectorAll( 'tr.iedit' ),
+			tableRowCount = tableRows.length;
+		while ( tableRowCount-- ) {
+			if ( 0 === tableRowCount % 2 ) {
+				jQuery( tableRows[tableRowCount] ).addClass( 'alternate' );
 			} else {
-				jQuery( table_rows[table_row_count] ).removeClass( 'alternate' );
+				jQuery( tableRows[tableRowCount] ).removeClass( 'alternate' );
 			}
 		}
 
