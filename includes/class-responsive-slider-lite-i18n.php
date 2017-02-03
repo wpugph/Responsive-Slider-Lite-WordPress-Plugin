@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://carlalberto.ml/
+ * @link       https://carl.alber2.com/
  * @since      1.0.0
  *
  * @package    Responsive_Slider_Lite
@@ -22,7 +21,7 @@
  * @since      1.0.0
  * @package    Responsive_Slider_Lite
  * @subpackage Responsive_Slider_Lite/includes
- * @author     Carl Alberto <cgalbert01@gmail.com>
+ * @author     Carl Alberto <carl@alber2.com>
  */
 class Responsive_Slider_Lite_i18n {
 

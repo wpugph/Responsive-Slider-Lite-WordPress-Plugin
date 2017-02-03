@@ -1,3 +1,6 @@
+/**
+ * JS to render the drag and drop feature of the images.
+ */
 function updateResponsiveSliderLiteOrderingCallback( response ) {
 
 	// Load temporary holder for json response.

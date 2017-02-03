@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Fired during plugin deactivation
  *
- * @link       http://carlalberto.ml/
+ * @link       https://carl.alber2.com/
  * @since      1.0.0
  *
  * @package    Responsive_Slider_Lite
