@@ -1,21 +1,7 @@
-/**
- * JS to render the drag and drop feature of the images.
- */
-function updateResponsiveSliderLiteOrderingCallback( response ) {
+function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 
 	// Load temporary holder for json response.
 	var changes = jQuery.parseJSON( response );
-	var referencePosition;
-	var updatedPosition;
-	var inlineKey;
-	var inline_referencePosition;
-	var domMenuOrder;
-	var postTitle = null;
-	var domOfPostParent;
-	var dom_postTitle;
-	var dashes = 0;
-	var domRowTitle;
-	varv post_table_to_order;
 
 	// Make sure script only fires on children.
 	if ( 'children' === response ) {
@@ -23,43 +9,45 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 		return;
 	}
 
-	updatedPosition = changes.updatedPosition;
-	for (  referencePosition in updatedPosition ) {
-		if ( 'next' === referencePosition ) {
+	var updated_Position = changes.updated_Position;
+	for ( var reference_position in updated_Position ) {
+		if ( 'next' === reference_position ) {
 			continue;
 		}
 
-		inlineKey = document.getElementById( 'inline_' + referencePosition );
+		var inline_key = document.getElementById( 'inline_' + reference_position );
 
-		if ( null !== inlineKey && updatedPosition.hasOwnProperty( referencePosition ) ) {
+		if ( null !== inline_key && updated_Position.hasOwnProperty( reference_position ) ) {
+			var inline_reference_position;
+			var dom_menu_order = inline_reference_position.querySelector( '.menu_order' );
 
-			domMenuOrder = inline_referencePosition.querySelector( '.menu_order' );
-
-			if ( undefined !== updatedPosition[referencePosition]['.menu_order'] ) {
-				if ( null !== domMenuOrder ) {
-					domMenuOrder.innerHTML = updatedPosition[referencePosition]['.menu_order'];
+			if ( undefined !== updated_Position[reference_position]['.menu_order'] ) {
+				if ( null !== dom_menu_order ) {
+					dom_menu_order.innerHTML = updated_Position[reference_position]['.menu_order'];
 				}
 
-				domOfPostParent = inlineKey.querySelector( '.post_parent' );
-				if ( null !== domOfPostParent ) {
-					domOfPostParent.innerHTML = updatedPosition[referencePosition]['.post_parent'];
+				var dom_of_post_parent = inline_key.querySelector( '.post_parent' );
+				if ( null !== dom_of_post_parent ) {
+					dom_of_post_parent.innerHTML = updated_Position[reference_position]['.post_parent'];
 				}
 
-				dom_postTitle = inline_referencePosition.querySelector( '.postTitle' );
-				if ( null !== dom_postTitle ) {
-					postTitle = dom_postTitle.innerHTML;
+				var post_title = null;
+				var dom_post_title = inline_reference_position.querySelector( '.post_title' );
+				if ( null !== dom_post_title ) {
+					post_title = dom_post_title.innerHTML;
 				}
 
-				while ( dashes < updatedPosition[referencePosition]['.depth'] ) {
-					postTitle = '&mdash; ' + postTitle;
+				var dashes = 0;
+				while ( dashes < updated_Position[reference_position]['.depth'] ) {
+					post_title = '&mdash; ' + post_title;
 					dashes++;
 				}
-				domRowTitle = inlineKey.parentNode.querySelector( '.row-title' );
-				if ( null !== domRowTitle && null !== postTitle ) {
-					domRowTitle.innerHTML = postTitle;
+				var dom_row_title = inline_key.parentNode.querySelector( '.row-title' );
+				if ( null !== dom_row_title && null !== post_title ) {
+					dom_row_title.innerHTML = post_title;
 				}
-			} else if ( null !== domMenuOrder ) {
-				domMenuOrder.innerHTML = updatedPosition[referencePosition];
+			} else if ( null !== dom_menu_order ) {
+				dom_menu_order.innerHTML = updated_Position[reference_position];
 			}
 		}
 	}
@@ -72,14 +60,14 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 			nextid: changes.next['.nextid'],
 			start: changes.next['.start'],
 			excluded: changes.next['.excluded']
-		}, updateResponsiveSliderLiteOrderingCallback );
+		}, update_Responsive_Slider_Lite_Ordering_Callback );
 	} else {
 		jQuery( '.spo-updating-row' ).removeClass( 'spo-updating-row' );
 		post_table_to_order.removeClass( 'spo-updating' ).sortable( 'enable' );
 	}
 }
 
-post_table_to_order = jQuery( '.wp-list-table tbody' );
+var post_table_to_order = jQuery( '.wp-list-table tbody' );
 post_table_to_order.sortable({
 	items: '> tr',
 	cursor: 'move',
@@ -131,7 +119,7 @@ post_table_to_order.sortable({
 			id: postid,
 			previd: prevpostid,
 			nextid: nextpostid
-		}, updateResponsiveSliderLiteOrderingCallback );
+		}, update_Responsive_Slider_Lite_Ordering_Callback );
 
 		var table_rows = document.querySelectorAll( 'tr.iedit' ),
 			table_row_count = table_rows.length;
