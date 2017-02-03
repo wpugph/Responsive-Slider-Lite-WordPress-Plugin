@@ -1,6 +1,6 @@
 === Responsive Slider lite ===
 Contributors: carl-alberto
-Donate link: http://carlalberto.ml/
+Donate link: https://carl.alber2.com/
 Tags: slider, responsive slider, lightweight slider, bootstrap slider, image slider, image gallery, images, gallery, responsive wordpress slider
 Requires at least: 3.0.1
 Tested up to: 4.7.2
