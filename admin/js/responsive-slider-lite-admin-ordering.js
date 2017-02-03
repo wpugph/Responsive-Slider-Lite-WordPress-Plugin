@@ -1,3 +1,11 @@
+/**
+ * Contains the admin sorting functinos.
+ *
+ * @link       https://carl.alber2.com/
+ * @since      1.0.0
+ *
+ * @package    Responsive_Slider_Lite
+ */
 function update_Responsive_Slider_Lite_Ordering_Callback( response ) {
 
 	// Load temporary holder for json response.

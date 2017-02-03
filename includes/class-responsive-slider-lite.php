@@ -381,7 +381,7 @@ class Responsive_Slider_Lite {
 					}
 					wp_dropdown_categories(
 						array(
-							'show_option_all' => __( 'All ' . $tax_id->label ),
+							'show_option_all' => __( 'All ' . $tax_id->label ), // @codingStandardsIgnoreLine
 							'taxonomy' => $tax_slug,
 							'name' => $tax_id->name,
 							'orderby' => 'term_order',
@@ -398,18 +398,17 @@ class Responsive_Slider_Lite {
 		/**
 		 * Register Custom Taxonomy.
 		 *
-		 * @param int $post_id The post id that we need.
+		 * @param string $query The query.
 		 */
 		function add_category_restriction( $query ) {
 				global $pagenow;
 				global $typenow;
-				// echo $typenow;
-			if ( ($pagenow == 'edit.php') && ($typenow == 'responsive_slider_l') ) {
+			if ( ( 'edit.php' === $pagenow ) && ( 'responsive_slider_l' === $typenow ) ) {
 				$filters = get_object_taxonomies( $typenow );
 				foreach ( $filters as $tax_slug ) {
 					$var = &$query->query_vars[ $tax_slug ];
 					if ( isset( $var ) ) {
-						$term = get_term_by( 'id',$var,$tax_slug );
+						$term = get_term_by( 'id',$var,$tax_slug ); // @codingStandardsIgnoreLine
 						if ( is_object( $term ) ) {
 							$var = $term->slug;
 						} else {
@@ -426,8 +425,15 @@ class Responsive_Slider_Lite {
 
 	}
 
-	// register shortcode
+	/**
+	 * Register shortcode.
+	 */
 	public function activate_slider_responsive_sc() {
+		/**
+		 * Register Custom Taxonomy.
+		 *
+		 * @param array $options Array of options.
+		 */
 		function responsive_slider_lite_func( $options ) {
 		    $att = shortcode_atts( array(
 		        'cat' => '',
@@ -447,7 +453,16 @@ class Responsive_Slider_Lite {
 		    return;
 		}
 
+		/**
+		 * Register Slider frontend loader.
+		 *
+		 * @param array  $loop Array of options.
+		 * @param string $title Title of frontend.
+		 * @param string $desc The contents.
+		 * @param string $cat The category.
+		 */
 		function render_slider_front( $loop, $title, $desc, $cat ) {
+ 		// @codingStandardsIgnoreStart
 			?>
 			<div class="container-fluid slidermyCarousel">
 				 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -458,7 +473,7 @@ class Responsive_Slider_Lite {
 							while ( $loop->have_posts() ) : $loop->the_post(); ?>
 									<?php
 									$c++;
-									if ( $c == 1 ) {
+									if ( 1 === $c ) {
 										$class = ' active';
 									} else {
 										$class = '';
@@ -492,6 +507,7 @@ class Responsive_Slider_Lite {
 				</div>
 			</div>
 			<?php
+			// @codingStandardsIgnoreEnd
 			wp_reset_postdata();
 		}
 		add_shortcode( 'rsliderl', 'responsive_slider_lite_func' );
