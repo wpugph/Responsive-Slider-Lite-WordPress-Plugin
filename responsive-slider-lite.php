@@ -1,23 +1,18 @@
 <?php
 /**
- * The plugin bootstrap file
+ * TMain plugin file.
  *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
- * @link              http://carlalberto.ml/
+ * @link              https://carl.alber2.com/
  * @since             1.0.0
  * @package           Responsive_Slider_Lite
  *
  * @wordpress-plugin
  * Plugin Name:       Responsive Slider Lite
- * Plugin URI:        http://carlalberto.ml/plugins
+ * Plugin URI:        https://carl.alber2.com/
  * Description:       A lightweight responsive slider utilizing bootstrap
- * Version:           1.0.8
+ * Version:           1.1.0
  * Author:            Carl Alberto
- * Author URI:        http://carlalberto.ml/
+ * Author URI:        https://carl.alber2.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       responsive-slider-lite
