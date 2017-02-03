@@ -9,6 +9,9 @@
 
 var postTableToOrder = jQuery( '.wp-list-table tbody' );
 var inlineEditPost;
+var children;
+var i;
+var selector;
 
 postTableToOrder.sortable({
 	items: '> tr',
@@ -19,16 +22,17 @@ postTableToOrder.sortable({
 	distance: 2,
 	opacity: 0.8,
 	tolerance: 'pointer',
-	start: function(e, ui){
-		if ( typeof(inlineEditPost) !== 'undefined' ) {
+	start: function( e, ui ) {
+		if ( typeof( inlineEditPost ) !== 'undefined' ) {
 			inlineEditPost.revert();
 		}
 		ui.placeholder.height( ui.item.height() );
+
 	},
-	helper: function(e, ui) {
-		var children = ui.children();
-		for ( var i = 0; i < children.length; i++ ) {
-			var selector = jQuery( children[i] );
+	helper: function( e, ui ) {
+		children = ui.children();
+		for ( i = 0; i < children.length; i++ ) {
+			selector = jQuery( children[i] );
 			selector.width( selector.width() );
 		}
 		return ui;
@@ -83,7 +87,7 @@ function updateResponsiveSliderLiteOrderingCallback( response ) {
 	var updatedPosition;
 	var inlineKey;
 	var inlineReferencePosition;
-	var domMenuOrder
+	var domMenuOrder;
 	var postTitle;
 	var dom_postTitle;
 	var dashes;
